@@ -156,3 +156,36 @@
     text-align: center;
   }
   
+  /* Корзина мусора в левом нижнем углу */
+#trash-can {
+  position: fixed;
+  bottom: 20px;
+  left: 20px;
+  width: 50px;
+  height: 50px;
+  z-index: 1000;
+}
+
+#trash-can img {
+  width: 100%;
+  height: auto;
+}
+
+/* Блок действий (дублировать/удалить), показывается при hover */
+.object-actions {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  display: none; /* Скрыто по умолчанию */
+}
+
+.object-card:hover .object-actions {
+  display: block;
+}
+
+.object-actions button {
+  margin-left: 5px;
+  cursor: pointer;
+  padding: 5px;
+  font-size: 12px;
+}

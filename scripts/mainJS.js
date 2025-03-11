@@ -108,7 +108,7 @@ function registerUser() {
   const users = getUsersFromStorage();
   // Проверяем, не занято ли имя
   if (users.some(u => u.username === username)) {
-    alert("A user with this name already exists!");
+    alert("Пользователь с таким именем уже существует!");
     return;
   }
 
@@ -147,7 +147,7 @@ function loginUser() {
     document.getElementById("export-log-section").classList.remove("hidden");
 
     // Отображаем имя пользователя
-    document.getElementById("current-user").textContent = "User : " + currentUser;
+    document.getElementById("current-user").textContent = "Пользователь: " + currentUser;
 
     closeModal("login-modal");
   } else {
@@ -286,12 +286,9 @@ function renderObjects() {
       title.textContent = obj.purpose || "Без названия (коробка)";
       card.appendChild(title);
 
-      // Можно добавить иконку или что-то ещё при желании.
-
       // При клике на коробку: можно показать меню (если нужно).
       card.addEventListener("click", () => {
         alert(`Это коробка: ${obj.purpose}\nID: ${obj.id}`);
-        // Или реализовать другое меню
       });
 
     } 
@@ -312,7 +309,7 @@ function renderObjects() {
         cellDiv.classList.add("organizer-cell");
         cellDiv.textContent = cell.cellIndex; // Нумерация ячейки
 
-        // При клике на ячейку открываем модальное окно редактирования
+        // При клике на ячейку - открываем модальное окно редактирования
         cellDiv.addEventListener("click", (e) => {
           // Останавливаем всплытие, чтобы клик не сработал на card
           e.stopPropagation();
@@ -336,6 +333,29 @@ function renderObjects() {
         alert(`Это органайзер: ${obj.purpose}\nID: ${obj.id}\nКоличество ячеек: ${obj.cells.length}`);
       });
     }
+
+    // Блок кнопок "Дублировать" и "Удалить"
+    const actionsDiv = document.createElement("div");
+    actionsDiv.classList.add("object-actions");
+
+    const duplicateBtn = document.createElement("button");
+    duplicateBtn.textContent = "Дублировать";
+    duplicateBtn.addEventListener("click", (e) => {
+      e.stopPropagation();
+      duplicateObject(obj.id);
+    });
+
+    const deleteBtn = document.createElement("button");
+    deleteBtn.textContent = "Удалить";
+    deleteBtn.addEventListener("click", (e) => {
+      e.stopPropagation();
+      deleteObjectWithAnimation(obj.id, card);
+    });
+
+    actionsDiv.appendChild(duplicateBtn);
+    actionsDiv.appendChild(deleteBtn);
+
+    card.appendChild(actionsDiv);
 
     container.appendChild(card);
   });
@@ -413,12 +433,90 @@ function changeCellQuantity(delta) {
 }
 
 /*******************************************************
-                export log functions
+ * Новые функции: дублирование и удаление с анимацией
  *******************************************************/
 
-// Upload log to text file
+// Дублировать объект
+function duplicateObject(id) {
+  const objects = getObjectsFromStorage();
+  const obj = objects.find(o => o.id === id);
+  if (!obj) return;
+
+  // Глубокое копирование, чтобы не ссылаться на тот же массив
+  const newObj = JSON.parse(JSON.stringify(obj));
+  // Генерируем новый ID
+  newObj.id = Date.now();
+
+  // Добавляем в список
+  objects.push(newObj);
+  setObjectsToStorage(objects);
+
+  // Логируем
+  createBlock(currentUser, "DUPLICATE_OBJECT", { originalId: id, newId: newObj.id });
+
+  // Перерисовываем
+  renderObjects();
+}
+
+// Удалить объект с красивой анимацией "улета" в корзину
+function deleteObjectWithAnimation(id, cardElement) {
+  // 1) Клонируем карточку
+  const clone = cardElement.cloneNode(true);
+  const rect = cardElement.getBoundingClientRect();
+  
+  // Позиционируем клон в тех же координатах
+  clone.style.position = "absolute";
+  clone.style.top = rect.top + "px";
+  clone.style.left = rect.left + "px";
+  clone.style.width = rect.width + "px";
+  clone.style.height = rect.height + "px";
+  clone.style.transition = "transform 0.8s ease-in-out, opacity 0.8s ease-in-out";
+  clone.style.zIndex = 1000;
+
+  // Добавляем клон на страницу
+  document.body.appendChild(clone);
+
+  // 2) Удаляем оригинал из DOM сразу (чтобы не мешал)
+  cardElement.remove();
+
+  // 3) Вычисляем координаты корзины (центр корзины)
+  const trashRect = document.getElementById("trash-can").getBoundingClientRect();
+  const targetX = trashRect.left + trashRect.width / 2 - (rect.left + rect.width / 2);
+  const targetY = trashRect.top + trashRect.height / 2 - (rect.top + rect.height / 2);
+
+  // 4) Запускаем анимацию (через requestAnimationFrame)
+  requestAnimationFrame(() => {
+    clone.style.transform = `translate(${targetX}px, ${targetY}px) scale(0.1)`;
+    clone.style.opacity = "0";
+  });
+
+  // 5) Когда анимация закончится, удаляем клон и сам объект из localStorage
+  clone.addEventListener("transitionend", () => {
+    clone.remove();
+
+    // Удаляем из localStorage
+    const objects = getObjectsFromStorage();
+    const index = objects.findIndex(o => o.id === id);
+    if (index !== -1) {
+      objects.splice(index, 1);
+      setObjectsToStorage(objects);
+
+      // Логируем
+      createBlock(currentUser, "DELETE_OBJECT", { deletedId: id });
+    }
+
+    // Обновляем отображение
+    renderObjects();
+  }, { once: true });
+}
+
+/*******************************************************
+ * Функции экспорта лога
+ *******************************************************/
+
+// Выгрузить лог в текстовый файл
 function exportLog() {
-// Let's collect the contents of the log
+  // Соберём содержимое лога
   let logText = "Index | Timestamp           | User        | Action            | Data\n";
   logText += "-------------------------------------------------------------------------\n";
   blockchain.forEach(block => {
