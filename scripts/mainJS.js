@@ -1,22 +1,23 @@
+
 /*******************************************************
- * Глобальные переменные
+ |                 Global variables                      |
  *******************************************************/
 
-// Храним в памяти текущего пользователя (после входа)
+// Store in memory the current user (after login)
 let currentUser = null;
 
-// «Блокчейн»-подобный лог (массив блоков). 
-// Каждый блок: { index, timestamp, user, action, data, previousHash, hash }
+// "Blockchain"-like log (array of blocks).
+// Each block: { index, timestamp, user, action, data, previousHash, hash }
 let blockchain = [];
 
-// Вспомогательная функция для генерации простого хэша
+// Helper function for generating a simple hash
 function simpleHash(input) {
-  // Самый простой способ - хешировать через встроенный btoa или MD5/SHA1-библиотеки.
-  // Здесь упрощённо используем btoa + какую-то «примесь».
+// The easiest way is to hash via the built-in btoa or MD5/SHA1 libraries.
+// Here we use btoa + some "mixture" in a simplified way.
   return btoa(unescape(encodeURIComponent(input))).slice(0, 16);
 }
 
-// Генерация нового блока в «блокчейне»
+// Generate a new block in the "blockchain"
 function createBlock(user, action, data) {
   const timestamp = new Date().toISOString();
   const index = blockchain.length;
@@ -34,14 +35,14 @@ function createBlock(user, action, data) {
     hash
   };
 
-  // Добавляем в цепочку
+// Add to the chain
   blockchain.push(block);
 
-  // Сохраняем в localStorage
+// Save in localStorage
   localStorage.setItem("blockchainLog", JSON.stringify(blockchain));
 }
 
-// Восстановим блокчейн из localStorage, если он там есть
+// Restore the blockchain from localStorage if it is there
 function loadBlockchain() {
   const stored = localStorage.getItem("blockchainLog");
   if (stored) {
@@ -51,7 +52,7 @@ function loadBlockchain() {
   }
 }
 
-// Сохраняем пользователей в localStorage (простой способ)
+// Store users in localStorage (easy way)
 function getUsersFromStorage() {
   const usersStr = localStorage.getItem("users");
   if (usersStr) {
@@ -64,7 +65,7 @@ function setUsersToStorage(users) {
   localStorage.setItem("users", JSON.stringify(users));
 }
 
-// Сохраняем объекты (коробки, органайзеры) в localStorage
+// Save objects (boxes, organizers) in localStorage
 function getObjectsFromStorage() {
   const objectsStr = localStorage.getItem("objects");
   if (objectsStr) {
@@ -77,25 +78,25 @@ function setObjectsToStorage(objects) {
   localStorage.setItem("objects", JSON.stringify(objects));
 }
 
-// Загрузка данных при старте
+// Load data on startup
 loadBlockchain();
 
 
 /*******************************************************
- * Функции для регистрации / входа / выхода
+* Functions for registration/login/logout
  *******************************************************/
 
-// Открыть модальное окно
+// Open a modal window
 function openModal(modalId) {
   document.getElementById(modalId).classList.remove("hidden");
 }
 
-// Закрыть модальное окно
+// Close the modal window
 function closeModal(modalId) {
   document.getElementById(modalId).classList.add("hidden");
 }
 
-// Регистрация
+// Registration
 function registerUser() {
   const username = document.getElementById("reg-username").value.trim();
   const password = document.getElementById("reg-password").value;
@@ -106,7 +107,7 @@ function registerUser() {
   }
 
   const users = getUsersFromStorage();
-  // Проверяем, не занято ли имя
+// Check if the name is taken
   if (users.some(u => u.username === username)) {
     alert("A user with this name already exists!");
     return;
@@ -138,15 +139,15 @@ function loginUser() {
 
   if (user) {
     currentUser = user.username;
-    // Логируем событие
+// Log the event
     createBlock(currentUser, "LOGIN", { username: currentUser });
 
-    // Скрываем блок авторизации, показываем основной контент
+// Hide the authorization block, show the main content
     document.getElementById("auth-section").classList.add("hidden");
     document.getElementById("main-content").classList.remove("hidden");
     document.getElementById("export-log-section").classList.remove("hidden");
 
-    // Отображаем имя пользователя
+// Display the username
     document.getElementById("current-user").textContent = "Пользователь: " + currentUser;
 
     closeModal("login-modal");
@@ -155,26 +156,26 @@ function loginUser() {
   }
 }
 
-// Выход
+// Exit
 function logoutUser() {
   if (currentUser) {
     createBlock(currentUser, "LOGOUT", { username: currentUser });
   }
   currentUser = null;
 
-  // Снова показываем блок авторизации, скрываем основной контент
+// Show the authorization block again, hide the main content
   document.getElementById("auth-section").classList.remove("hidden");
   document.getElementById("main-content").classList.add("hidden");
   document.getElementById("export-log-section").classList.add("hidden");
 }
 
 /*******************************************************
- * Функции для создания и отображения объектов
+Functions for creating and displaying objects
  *******************************************************/
 
-// Показать форму для создания объекта
+// Show the form for creating an object
 function showCreateObjectModal() {
-  // Сброс полей
+// Reset fields
   document.getElementById("object-type").value = "";
   document.getElementById("box-color").value = "#ffff00";
   document.getElementById("box-purpose").value = "";
@@ -182,14 +183,14 @@ function showCreateObjectModal() {
   document.getElementById("organizer-color").value = "#ff0000";
   document.getElementById("organizer-cells").value = 10;
 
-  // Скрыть все параметры
+// Hide all parameters
   document.getElementById("box-params").classList.add("hidden");
   document.getElementById("organizer-params").classList.add("hidden");
 
   openModal("create-object-modal");
 }
 
-// Изменение полей в зависимости от типа объекта
+// Changing fields depending on the object type
 function onObjectTypeChange() {
   const type = document.getElementById("object-type").value;
   if (type === "box") {
@@ -199,13 +200,13 @@ function onObjectTypeChange() {
     document.getElementById("box-params").classList.add("hidden");
     document.getElementById("organizer-params").classList.remove("hidden");
   } else {
-    // Ничего не выбрано
+// Nothing selected
     document.getElementById("box-params").classList.add("hidden");
     document.getElementById("organizer-params").classList.add("hidden");
   }
 }
 
-// Создать объект (коробка или органайзер)
+// Create an object (box or organizer)
 function createObject() {
   const type = document.getElementById("object-type").value;
   if (!type) {
@@ -219,7 +220,7 @@ function createObject() {
     const color = document.getElementById("box-color").value;
     const purpose = document.getElementById("box-purpose").value.trim();
 
-    // Создаём объект-коробку
+// Create a box object
     const newBox = {
       id: Date.now(), // уникальный id
       type: "box",
@@ -230,7 +231,7 @@ function createObject() {
     objects.push(newBox);
     setObjectsToStorage(objects);
 
-    // Логируем
+// Logging
     createBlock(currentUser, "CREATE_BOX", newBox);
 
   } else if (type === "organizer") {
@@ -238,7 +239,7 @@ function createObject() {
     const color = document.getElementById("organizer-color").value;
     const cellsCount = parseInt(document.getElementById("organizer-cells").value, 10);
 
-    // Формируем массив ячеек
+// Form an array of cells
     const cells = [];
     for (let i = 0; i < cellsCount; i++) {
       cells.push({
@@ -259,7 +260,7 @@ function createObject() {
     objects.push(newOrganizer);
     setObjectsToStorage(objects);
 
-    // Логируем
+// Logging
     createBlock(currentUser, "CREATE_ORGANIZER", newOrganizer);
   }
 
@@ -267,7 +268,7 @@ function createObject() {
   renderObjects();
 }
 
-// Отрисовать все объекты на главной странице
+// Render all objects on the main page
 function renderObjects() {
   const container = document.getElementById("objects-container");
   container.innerHTML = "";
@@ -278,7 +279,7 @@ function renderObjects() {
     const card = document.createElement("div");
     card.classList.add("object-card");
 
-    // Если это коробка
+// If this is a box
     if (obj.type === "box") {
       card.style.backgroundColor = obj.color;
       const title = document.createElement("div");
@@ -286,15 +287,15 @@ function renderObjects() {
       title.textContent = obj.purpose || "Untitled (box)";
       card.appendChild(title);
 
-      // При клике на коробку: можно показать меню (если нужно).
+// When clicking on the box: you can show the menu (if needed).
       card.addEventListener("click", () => {
         alert(`This box: ${obj.purpose}\nID: ${obj.id}`);
       });
 
     } 
-    // Если это органайзер
+// If this is an organizer
     else if (obj.type === "organizer") {
-      card.style.borderColor = obj.color; // цвет рамки — цвет органайзера
+      card.style.borderColor = obj.color; // frame color - organizer color
       const title = document.createElement("div");
       title.classList.add("object-title");
       title.textContent = obj.purpose || "Untitled (organizer)";
@@ -307,14 +308,14 @@ function renderObjects() {
       obj.cells.forEach(cell => {
         const cellDiv = document.createElement("div");
         cellDiv.classList.add("organizer-cell");
-        cellDiv.textContent = cell.cellIndex; // Нумерация ячейки
+        cellDiv.textContent = cell.cellIndex; // Cell numbering
 
-        // При клике на ячейку - открываем модальное окно редактирования
+// When clicking on a cell, we open a modal editing window
         cellDiv.addEventListener("click", (e) => {
-          // Останавливаем всплытие, чтобы клик не сработал на card
+// Stop the popup so that the click doesn't trigger on the card
           e.stopPropagation();
 
-          // Добавим класс "active" для анимации
+// Add class "active" for animation
           cellDiv.classList.add("active");
           setTimeout(() => {
             cellDiv.classList.remove("active");
@@ -328,13 +329,13 @@ function renderObjects() {
 
       card.appendChild(cellsWrapper);
 
-      // При клике на саму карточку органайзера (не на ячейки)
+// When clicking on the organizer card itself (not on the cells)
       card.addEventListener("click", () => {
         alert(`This is an organizer: ${obj.purpose}\nID: ${obj.id}\nNumber of cells: ${obj.cells.length}`);
       });
     }
 
-    // Блок кнопок "Дублировать" и "Удалить"
+// When clicking on the organizer card itself (not on the cells)
     const actionsDiv = document.createElement("div");
     actionsDiv.classList.add("object-actions");
 
@@ -362,24 +363,24 @@ function renderObjects() {
 }
 
 /*******************************************************
- * Функции для работы с ячейками органайзера
+* Functions for working with organizer cells
  *******************************************************/
 
-// Открыть модальное окно для редактирования конкретной ячейки
+// Open a modal window to edit a specific cell
 function openCellModal(organizerId, cellIndex) {
-  // Сохраним эти данные во временных атрибутах
+// Store this data in temporary attributes
   const cellModal = document.getElementById("cell-modal");
   cellModal.setAttribute("data-organizer-id", organizerId);
   cellModal.setAttribute("data-cell-index", cellIndex);
 
-  // Найдём саму ячейку в данных
+// Find the cell itself in the data
   const objects = getObjectsFromStorage();
   const organizer = objects.find(o => o.id === organizerId);
   if (!organizer) return;
 
   const cellData = organizer.cells.find(c => c.cellIndex === cellIndex);
 
-  // Заполним поля
+// Fill in the fields
   document.getElementById("cell-number").textContent = cellIndex;
   document.getElementById("cell-product").value = cellData.productName;
   document.getElementById("cell-quantity").value = cellData.quantity;
@@ -387,7 +388,7 @@ function openCellModal(organizerId, cellIndex) {
   openModal("cell-modal");
 }
 
-// Сохранить изменения по ячейке
+// Save changes by cell
 function saveCellChanges() {
   const cellModal = document.getElementById("cell-modal");
   const organizerId = parseInt(cellModal.getAttribute("data-organizer-id"), 10);
@@ -396,7 +397,7 @@ function saveCellChanges() {
   const productName = document.getElementById("cell-product").value.trim();
   const quantity = parseInt(document.getElementById("cell-quantity").value, 10);
 
-  // Найдём организер в списке
+// Find the organizer in the list
   const objects = getObjectsFromStorage();
   const organizer = objects.find(o => o.id === organizerId);
   if (!organizer) return;
@@ -404,14 +405,14 @@ function saveCellChanges() {
   const cellData = organizer.cells.find(c => c.cellIndex === cellIndex);
   if (!cellData) return;
 
-  // Обновляем
+// Update
   cellData.productName = productName;
   cellData.quantity = quantity;
 
-  // Сохраняем
+// Save
   setObjectsToStorage(objects);
 
-  // Логируем
+// Logging
   createBlock(currentUser, "UPDATE_CELL", {
     organizerId,
     cellIndex,
@@ -423,48 +424,48 @@ function saveCellChanges() {
   renderObjects();
 }
 
-// Уменьшить/увеличить количество продукта
+// Decrease/increase quantity of product
 function changeCellQuantity(delta) {
   const input = document.getElementById("cell-quantity");
   let value = parseInt(input.value, 10);
   value += delta;
-  if (value < 0) value = 0; // не даём уйти в отрицательные числа
+  if (value < 0) value = 0; // we don't let it go into negative numbers
   input.value = value;
 }
 
 /*******************************************************
- функции: дублирование и удаление с анимацией
+functions: duplication and deletion with animation
  *******************************************************/
 
-// Дублировать объект
+// Duplicate the object
 function duplicateObject(id) {
   const objects = getObjectsFromStorage();
   const obj = objects.find(o => o.id === id);
   if (!obj) return;
 
-  // Глубокое копирование, чтобы не ссылаться на тот же массив
+// Deep copy to avoid referencing the same array
   const newObj = JSON.parse(JSON.stringify(obj));
   // Генерируем новый ID
   newObj.id = Date.now();
 
-  // Добавляем в список
+// Add to the list
   objects.push(newObj);
   setObjectsToStorage(objects);
 
-  // Логируем
+// Logging
   createBlock(currentUser, "DUPLICATE_OBJECT", { originalId: id, newId: newObj.id });
 
-  // Перерисовываем
+// Redraw
   renderObjects();
 }
 
-// Удалить объект с красивой анимацией "улета" в корзину
+// Delete the object with a nice "fly away" animation to the trash
 function deleteObjectWithAnimation(id, cardElement) {
-  // 1) Клонируем карточку
+  // 1) Clone the card
   const clone = cardElement.cloneNode(true);
   const rect = cardElement.getBoundingClientRect();
   
-  // Позиционируем клон в тех же координатах
+ // Position the clone in the same coordinates
   clone.style.position = "absolute";
   clone.style.top = rect.top + "px";
   clone.style.left = rect.left + "px";
@@ -473,83 +474,83 @@ function deleteObjectWithAnimation(id, cardElement) {
   clone.style.transition = "transform 0.8s ease-in-out, opacity 0.8s ease-in-out";
   clone.style.zIndex = 1000;
 
-  // Добавляем клон на страницу
+// Add clone to page
   document.body.appendChild(clone);
 
-  // 2) Удаляем оригинал из DOM сразу (чтобы не мешал)
+  // 2) Remove the original from the DOM immediately (so it doesn't get in the way)
   cardElement.remove();
 
-  // 3) Вычисляем координаты корзины (центр корзины)
+  // 3) Calculate the coordinates of the basket (the center of the basket)
   const trashRect = document.getElementById("trash-can").getBoundingClientRect();
   const targetX = trashRect.left + trashRect.width / 2 - (rect.left + rect.width / 2);
   const targetY = trashRect.top + trashRect.height / 2 - (rect.top + rect.height / 2);
 
-  // 4) Запускаем анимацию (через requestAnimationFrame)
+  // 4) Start the animation (via requestAnimationFrame)
   requestAnimationFrame(() => {
     clone.style.transform = `translate(${targetX}px, ${targetY}px) scale(0.1)`;
     clone.style.opacity = "0";
   });
 
-  // 5) Когда анимация закончится, удаляем клон и сам объект из localStorage
+  // 5) When the animation is finished, delete the clone and the object itself from localStorage
   clone.addEventListener("transitionend", () => {
     clone.remove();
 
-    // Удаляем из localStorage
+    // Remove from localStorage
     const objects = getObjectsFromStorage();
     const index = objects.findIndex(o => o.id === id);
     if (index !== -1) {
       objects.splice(index, 1);
       setObjectsToStorage(objects);
 
-      // Логируем
+      // Logging
       createBlock(currentUser, "DELETE_OBJECT", { deletedId: id });
     }
 
-    // Обновляем отображение
+    // Update the display
     renderObjects();
   }, { once: true });
 }
 
 /*******************************************************
- * Функции экспорта лога
+* Log export functions
  *******************************************************/
 
-// Выгрузить лог в текстовый файл
+// Upload log to text file
 function exportLog() {
-  // Соберём содержимое лога
+// Let's collect the contents of the log
   let logText = "Index | Timestamp           | User        | Action            | Data\n";
   logText += "-------------------------------------------------------------------------\n";
   blockchain.forEach(block => {
     logText += `${block.index} | ${block.timestamp} | ${block.user} | ${block.action} | ${JSON.stringify(block.data)}\n`;
   });
 
-  // Создадим «файл» на лету
+// Let's create a "file" on the fly
   const blob = new Blob([logText], { type: "text/plain" });
   const url = URL.createObjectURL(blob);
 
-  // Создадим временную ссылку и кликнем по ней
+// Let's create a temporary link and click on it
   const a = document.createElement("a");
   a.href = url;
   a.download = "log.txt";
   document.body.appendChild(a);
   a.click();
 
-  // Удалим ссылку
+// Remove the link
   document.body.removeChild(a);
   URL.revokeObjectURL(url);
 }
 
 
 /*******************************************************
- * Навешиваем слушатели событий при загрузке страницы
+* Attach event listeners when the page loads
  *******************************************************/
 window.addEventListener("DOMContentLoaded", () => {
-  // Кнопки открытия модалок
+// Buttons for opening modals
   document.getElementById("register-btn").addEventListener("click", () => openModal("register-modal"));
   document.getElementById("login-btn").addEventListener("click", () => openModal("login-modal"));
   document.getElementById("add-object-btn").addEventListener("click", showCreateObjectModal);
 
-  // Кнопки закрытия модалок (крестики)
+// Modal close buttons (crosses)
   document.querySelectorAll(".close").forEach(closeBtn => {
     closeBtn.addEventListener("click", (e) => {
       const modalId = e.target.getAttribute("data-close");
@@ -557,27 +558,27 @@ window.addEventListener("DOMContentLoaded", () => {
     });
   });
 
-  // Кнопки «Зарегистрироваться» и «Войти»
+// "Register" and "Login" buttons
   document.getElementById("submit-register").addEventListener("click", registerUser);
   document.getElementById("submit-login").addEventListener("click", loginUser);
 
-  // Кнопка «Выйти»
+// Exit button
   document.getElementById("logout-btn").addEventListener("click", logoutUser);
 
-  // Изменение типа объекта в модальном окне
+// Changing the object type in a modal window
   document.getElementById("object-type").addEventListener("change", onObjectTypeChange);
 
-  // Кнопка «Создать объект»
+// "Create object" button
   document.getElementById("create-object-confirm").addEventListener("click", createObject);
 
-  // Модальное окно ячейки
+// Cell modal window
   document.getElementById("cell-quantity-minus").addEventListener("click", () => changeCellQuantity(-1));
   document.getElementById("cell-quantity-plus").addEventListener("click", () => changeCellQuantity(1));
   document.getElementById("cell-save-btn").addEventListener("click", saveCellChanges);
 
-  // Кнопка экспорта лога
+// Log export button
   document.getElementById("export-log-btn").addEventListener("click", exportLog);
 
-  // При загрузке сразу рендерим объекты (если вдруг уже что-то создано)
+// When loading, we immediately render objects (if something has already been created)
   renderObjects();
 });

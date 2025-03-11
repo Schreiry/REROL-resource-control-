@@ -7,29 +7,33 @@
     <link rel="stylesheet" href="..\styles\Main.Style.css">
 </head>
 <body>
-    
-    // intergate scripts 
 
-
+    <!-- ====================================================== -->
+    <!-- ************* intergate scripts  ************** -->
+    <!-- ====================================================== -->
   
     <script src="..\scripts\logic.js"></script>
     <script src="..\scripts\mainJS.js"></script>
 
-    // =-=-=-=-=-=-=-=-=--=-=-=-=-=-
+    <!-- ====================================================== -->
 
-
-   <!-- Шапка сайта -->
+     
 <header>
   <h1>Resurces Control</h1>
 </header>
 
-<!-- Блок регистрации / входа -->
+<!-- ====================================================== -->
+<!-- ************* Registration/entry unit ************** -->
+ <!-- ====================================================== -->
 <div id="auth-section">
   <button id="register-btn" class="big-button">Registration</button>
   <button id="login-btn" class="big-button">Log-In</button>
 </div>
 
-<!-- Модальное окно регистрации -->
+
+<!-- ====================================================== -->
+<!-- ************* Modal registration window  ************** -->
+ <!-- ====================================================== -->
 <div id="register-modal" class="modal hidden">
   <div class="modal-content">
     <span class="close" data-close="register-modal">&times;</span>
@@ -42,7 +46,10 @@
   </div>
 </div>
 
-<!-- Модальное окно входа -->
+
+<!-- ====================================================== -->
+<!-- ************* Modal registration window  ************** -->
+ <!-- ====================================================== -->
 <div id="login-modal" class="modal hidden">
   <div class="modal-content">
     <span class="close" data-close="login-modal">&times;</span>
@@ -55,7 +62,7 @@
   </div>
 </div>
 
-<!-- Основной контент (отображается после входа) -->
+<!-- Main content (displayed after login) -->
 <div id="main-content" class="hidden">
 
   <div class="user-info">
@@ -63,16 +70,22 @@
     <button id="logout-btn" class="logout-button">Log out</button>
   </div>
 
-  <!-- Кнопка "Добавить / Создать объект" -->
+
+<!-- ====================================================== -->
+<!-- *************  Add / Create object button  ************** -->
+ <!-- ====================================================== -->
   <button id="add-object-btn" class="add-object-button">Add object</button>
 
-  <!-- Модальное окно для создания объектов -->
+
+<!-- ====================================================== -->
+<!-- ************* Modal window for creating objects  ************** -->
+ <!-- ====================================================== -->
   <div id="create-object-modal" class="modal hidden">
     <div class="modal-content">
       <span class="close" data-close="create-object-modal">&times;</span>
       <h2>Creating an object</h2>
 
-      <!-- Выбор типа объекта -->
+      <!-- Select object type -->
       <label for="object-type">Object type:</label>
       <select id="object-type">
         <option value="">-- Select --</option>
@@ -80,7 +93,8 @@
         <option value="organizer">Cellular Organizer</option>
       </select>
 
-      <!-- Параметры для коробки -->
+
+      <!-- Parameters for the box -->
       <div id="box-params" class="hidden">
         <label for="box-color">Box color:</label>
         <input type="color" id="box-color" value="#ffff00" />
@@ -88,7 +102,9 @@
         <input type="text" id="box-purpose" placeholder="Например: Коробка с проводами" />
       </div>
 
-      <!-- Параметры для органайзера -->
+<!-- ====================================================== -->
+<!-- ************* Parameters for the organizer ************** -->
+ <!-- ====================================================== -->
       <div id="organizer-params" class="hidden">
         <label for="organizer-purpose">Purpose:</label>
         <input type="text" id="organizer-purpose" placeholder="Например: Крепёж" />
@@ -104,12 +120,12 @@
     </div>
   </div>
 
-  <!-- Секция, где будут отображаться созданные объекты (коробки и органайзеры) -->
+  <!-- Section where the created objects (boxes and organizers) will be displayed -->
   <div id="objects-container"></div>
 
 </div>
 
-<!-- Модальное окно редактирования ячеек у органайзера -->
+<!-- Modal window for editing cells in the organizer -->
 <div id="cell-modal" class="modal hidden">
   <div class="modal-content">
     <span class="close" data-close="cell-modal">&times;</span>
@@ -128,12 +144,12 @@
   </div>
 </div>
 
-<!-- Кнопка для экспорта лога в текстовый файл -->
+<!-- Button to export the log to a text file -->
 <div id="export-log-section" class="hidden">
   <button id="export-log-btn" class="export-log-button">Export log</button>
 </div>
 
-<!-- Корзина мусора в левом нижнем углу (если нужно удалять объекты анимацией) -->
+<!-- Trash can in the lower left corner (if you want to delete objects with animation) -->
 <div id="trash-can">
   <img src="../media/trash.png" alt="Trash" />
 </div>

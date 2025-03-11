@@ -1,14 +1,24 @@
-/* Скрытый элемент */
+/* Dear Collaboration Friends, Welcome to Styles.
+ It's too chaotic here, but I hope you can
+ handle this heavy burden and understand 
+ what kind of crap this David wrote. 
+ Attention,thank you for your attention 😁. . . */
+
+/* khm, khm. . .. May you be favored by the program code of the mundane.
+ May the comments of the saints help you */
+
+
+/* Hidden element */
 .hidden {
   display: none;
 }
 
-/* Базовые стили для страницы */
+/* Basic styles for the page */
 body {
   font-family: Arial, sans-serif;
   margin: 0;
   padding: 0;
-  background: #f8f9fa; /* Светлый фон для всего сайта */
+  background: #e5e5df; /*  website background*/
 }
 
 header {
@@ -18,13 +28,13 @@ header {
   text-align: center;
 }
 
-/* Блок регистрации/входа */
+/* Registration/entry unit */
 #auth-section {
   margin: 40px auto;
   text-align: center;
 }
 
-/* Крупные анимированные кнопки */
+/* Large animated buttons */
 .big-button {
   background: linear-gradient(to right, #4facfe 0%, #00f2fe 100%);
   color: #fff;
@@ -42,7 +52,7 @@ header {
   box-shadow: 0 0 10px rgba(0,0,0,0.2);
 }
 
-/* Модальные окна */
+/* Modal windows */
 .modal {
   position: fixed;
   top: 0;
@@ -50,7 +60,7 @@ header {
   width: 100%;
   height: 100%;
   overflow: auto;
-  background-color: rgba(0, 0, 0, 0.5); /* полупрозрачный фон */
+  background-color: rgba(0, 0, 0, 0.5); /* semi-transparent background */
   z-index: 999;
 }
 
@@ -64,7 +74,7 @@ header {
   box-shadow: 0 10px 25px rgba(0,0,0,0.2);
 }
 
-/* Кнопка закрытия (X) */
+/* Close button (X) */
 .close {
   position: absolute;
   top: 10px;
@@ -73,7 +83,7 @@ header {
   font-size: 24px;
 }
 
-/* Стили для формы регистрации/логина */
+/* Styles for registration/login form */
 .modal-content label {
   display: block;
   margin: 10px 0 5px;
@@ -101,14 +111,14 @@ header {
   background: #0056b3;
 }
 
-/* Основной контент после входа */
+/* Main content after login */
 #main-content {
   max-width: 1200px;
   margin: 20px auto;
   padding: 0 20px;
 }
 
-/* Информация о пользователе (имя + кнопка «Выйти») */
+/* User information (name + “Logout” button) */
 .user-info {
   display: flex;
   justify-content: space-between;
@@ -116,7 +126,7 @@ header {
   margin-bottom: 20px;
 }
 
-/* Кнопка "Выйти" */
+/* Exit button */
 .logout-button {
   background: #ff7b7b;
   color: #fff;
@@ -129,7 +139,7 @@ header {
   transform: scale(1.05);
 }
 
-/* Кнопка "Добавить объект" */
+/* “Add Object” button */
 .add-object-button {
   background: #28a745;
   color: #fff;
@@ -146,7 +156,7 @@ header {
   transform: scale(1.05);
 }
 
-/* Кнопка "Экспорт лога" */
+/* “Export Log” button */
 .export-log-button {
   background: #17a2b8;
   color: #fff;
@@ -169,7 +179,7 @@ header {
   justify-content: flex-start;
 }
 
-/* Карточка объекта (коробки или органайзеры) */
+/* Object card (boxes or organizers) */
 .object-card {
   position: relative;
   width: 220px;
@@ -187,21 +197,21 @@ header {
   box-shadow: 0 10px 15px rgba(0,0,0,0.15);
 }
 
-/* Название / предназначение объекта */
+/* Name / purpose of the object */
 .object-title {
   font-weight: bold;
   margin-bottom: 10px;
   font-size: 1.1rem;
 }
 
-/* Для органайзера – блок ячеек */
+/* For organizer - cell block */
 .organizer-cells {
   display: flex;
   flex-wrap: wrap;
   gap: 5px;
 }
 
-/* Отдельная ячейка */
+/* Separate cell */
 .organizer-cell {
   width: 32px;
   height: 32px;
@@ -214,10 +224,10 @@ header {
   cursor: pointer;
 }
 
-/* Эффект «подергивания и свечения» */
+/* “twitch and glow” effect /* */
 .organizer-cell.active {
   animation: shake 0.3s;
-  box-shadow: 0 0 10px yellow;
+  box-shadow: 0 0 10px rgba(238, 205, 87, 0.783);
 }
 
 @keyframes shake {
@@ -229,7 +239,7 @@ header {
   100% { transform: translate(0, 0); }
 }
 
-/* Управление количеством */
+/* Quantity control */
 .quantity-controls {
   display: flex;
   align-items: center;
@@ -247,7 +257,7 @@ header {
   text-align: center;
 }
 
-/* Корзина мусора в левом нижнем углу (если нужно удалять объекты анимацией) */
+/* Trash can in the lower left corner  */
 #trash-can {
   position: fixed;
   bottom: 20px;
@@ -262,7 +272,7 @@ header {
   height: auto;
 }
 
-/* Блок действий (дублировать/удалить), если вы оставляете эти кнопки при наведении */
+/* Action block (duplicate/delete) if you leave these buttons when hovering */
 .object-actions {
   position: absolute;
   top: 5px;
