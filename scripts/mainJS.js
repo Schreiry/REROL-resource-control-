@@ -582,3 +582,4 @@ window.addEventListener("DOMContentLoaded", () => {
 // When loading, we immediately render objects (if something has already been created)
   renderObjects();
 });
+
