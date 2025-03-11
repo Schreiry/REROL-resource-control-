@@ -108,7 +108,7 @@ function registerUser() {
   const users = getUsersFromStorage();
   // Проверяем, не занято ли имя
   if (users.some(u => u.username === username)) {
-    alert("Пользователь с таким именем уже существует!");
+    alert("A user with this name already exists!");
     return;
   }
 
@@ -147,7 +147,7 @@ function loginUser() {
     document.getElementById("export-log-section").classList.remove("hidden");
 
     // Отображаем имя пользователя
-    document.getElementById("current-user").textContent = "Пользователь: " + currentUser;
+    document.getElementById("current-user").textContent = "User : " + currentUser;
 
     closeModal("login-modal");
   } else {
@@ -413,12 +413,12 @@ function changeCellQuantity(delta) {
 }
 
 /*******************************************************
- * Функции экспорта лога
+                export log functions
  *******************************************************/
 
-// Выгрузить лог в текстовый файл
+// Upload log to text file
 function exportLog() {
-  // Соберём содержимое лога
+// Let's collect the contents of the log
   let logText = "Index | Timestamp           | User        | Action            | Data\n";
   logText += "-------------------------------------------------------------------------\n";
   blockchain.forEach(block => {
