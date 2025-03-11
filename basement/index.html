@@ -18,123 +18,125 @@
     // =-=-=-=-=-=-=-=-=--=-=-=-=-=-
 
 
-    <!-- Блок регистрации / входа -->
+   <!-- Шапка сайта -->
+<header>
+  <h1>Resurces Control</h1>
+</header>
+
+<!-- Блок регистрации / входа -->
 <div id="auth-section">
-    <button id="register-btn">REG</button>
-    <button id="login-btn">Log-In</button>
+  <button id="register-btn" class="big-button">Registration</button>
+  <button id="login-btn" class="big-button">Log-In</button>
+</div>
+
+<!-- Модальное окно регистрации -->
+<div id="register-modal" class="modal hidden">
+  <div class="modal-content">
+    <span class="close" data-close="register-modal">&times;</span>
+    <h2>Registration</h2>
+    <label for="reg-username">Domain :</label>
+    <input type="text" id="reg-username" />
+    <label for="reg-password">Password :</label>
+    <input type="password" id="reg-password" />
+    <button id="submit-register">Register</button>
   </div>
-  
-  <!-- Модальное окно регистрации -->
-  <div id="register-modal" class="modal hidden">
+</div>
+
+<!-- Модальное окно входа -->
+<div id="login-modal" class="modal hidden">
+  <div class="modal-content">
+    <span class="close" data-close="login-modal">&times;</span>
+    <h2>Registration</h2>
+    <label for="login-username">Domain :</label>
+    <input type="text" id="login-username" />
+    <label for="login-password">Password :</label>
+    <input type="password" id="login-password" />
+    <button id="submit-login">Log-In</button>
+  </div>
+</div>
+
+<!-- Основной контент (отображается после входа) -->
+<div id="main-content" class="hidden">
+
+  <div class="user-info">
+    <span id="current-user"></span>
+    <button id="logout-btn" class="logout-button">Log out</button>
+  </div>
+
+  <!-- Кнопка "Добавить / Создать объект" -->
+  <button id="add-object-btn" class="add-object-button">Add object</button>
+
+  <!-- Модальное окно для создания объектов -->
+  <div id="create-object-modal" class="modal hidden">
     <div class="modal-content">
-      <span class="close" data-close="register-modal">&times;</span>
-      <h2>Registration</h2>
-      <label for="reg-username">Domain</label>
-      <input type="text" id="reg-username" />
-      <label for="reg-password">password:</label>
-      <input type="password" id="reg-password" />
-      <button id="submit-register">Register now</button>
-    </div>
-  </div>
-  
-  <!-- Модальное окно входа -->
-  <div id="login-modal" class="modal hidden">
-    <div class="modal-content">
-      <span class="close" data-close="login-modal">&times;</span>
-      <h2>Вход</h2>
-      <label for="login-username">Domain</label>
-      <input type="text" id="login-username" />
-      <label for="login-password">password:</label>
-      <input type="password" id="login-password" />
-      <button id="submit-login">Register now</button>
-    </div>
-  </div>
-  
-  <!-- Основной контент (отображается после входа) -->
-  <div id="main-content" class="hidden">
-  
-    <div class="user-info">
-      <span id="current-user"></span>
-      <button id="logout-btn">Log out</button>
-    </div>
-  
-    <!-- Кнопка "Добавить / Создать объект" -->
-    <button id="add-object-btn">Add object</button>
-  
-    <!-- Модальное окно для создания объектов -->
-    <div id="create-object-modal" class="modal hidden">
-      <div class="modal-content">
-        <span class="close" data-close="create-object-modal">&times;</span>
-        <h2>Creating an object</h2>
-  
-        <!-- Выбор типа объекта -->
-        <label for="object-type">Object type:</label>
-        <select id="object-type">
-          <option value="">-- Select --</option>
-          <option value="box">Box</option>
-          <option value="organizer">Cellular Organizer</option>
-        </select>
-  
-        <!-- Параметры для коробки -->
-        <div id="box-params" class="hidden">
-          <label for="box-color">Box color (RGB):</label>
-          <input type="color" id="box-color" value="#ffff00" />
-          <label for="box-purpose">Purpose:</label>
-          <input type="text" id="box-purpose" placeholder="Например: Коробка с проводами" />
-        </div>
-  
-        <!-- Параметры для органайзера -->
-        <div id="organizer-params" class="hidden">
-          <label for="organizer-purpose">Purpose:</label>
-          <input type="text" id="organizer-purpose" placeholder="Например: Крепёж" />
-          
-          <label for="organizer-color">Organizer color (RGB):</label>
-          <input type="color" id="organizer-color" value="#ff0000" />
-          
-          <label for="organizer-cells">Number of cells:</label>
-          <input type="number" id="organizer-cells" value="" min="1" />
-        </div>
-  
-        <button id="create-object-confirm">Create</button>
+      <span class="close" data-close="create-object-modal">&times;</span>
+      <h2>Creating an object</h2>
+
+      <!-- Выбор типа объекта -->
+      <label for="object-type">Object type:</label>
+      <select id="object-type">
+        <option value="">-- Select --</option>
+        <option value="box">Box</option>
+        <option value="organizer">Cellular Organizer</option>
+      </select>
+
+      <!-- Параметры для коробки -->
+      <div id="box-params" class="hidden">
+        <label for="box-color">Box color:</label>
+        <input type="color" id="box-color" value="#ffff00" />
+        <label for="box-purpose">Purpose:</label>
+        <input type="text" id="box-purpose" placeholder="Например: Коробка с проводами" />
       </div>
-    </div>
-  
-    <!-- Секция, где будут отображаться созданные объекты (коробки и органайзеры) -->
-    <div id="objects-container"></div>
-  
-  </div>
-  
-  <!-- Модальное окно редактирования ячеек у органайзера -->
-  <div id="cell-modal" class="modal hidden">
-    <div class="modal-content">
-      <span class="close" data-close="cell-modal">&times;</span>
-      <h2>Setting up a cell</h2>
-      <p>Cell number: <span id="cell-number"></span></p>
-      <label for="cell-product">Product in cell:</label>
-      <input type="text" id="cell-product" />
-  
-      <label for="cell-quantity">Quantity:</label>
-      <div class="quantity-controls">
-        <button id="cell-quantity-minus">-</button>
-        <input type="number" id="cell-quantity" value="0" min="0" />
-        <button id="cell-quantity-plus">+</button>
+
+      <!-- Параметры для органайзера -->
+      <div id="organizer-params" class="hidden">
+        <label for="organizer-purpose">Purpose:</label>
+        <input type="text" id="organizer-purpose" placeholder="Например: Крепёж" />
+        
+        <label for="organizer-color">Organizer color:</label>
+        <input type="color" id="organizer-color" value="#ff0000" />
+        
+        <label for="organizer-cells">Number of cells:</label>
+        <input type="number" id="organizer-cells" value="10" min="1" />
       </div>
-      <button id="cell-save-btn">Save</button>
+
+      <button id="create-object-confirm">Create/Add</button>
     </div>
   </div>
-  
-  <!-- Кнопка для экспорта лога в текстовый файл -->
-  <div id="export-log-section" class="hidden">
-    <button id="export-log-btn">Export log</button>
+
+  <!-- Секция, где будут отображаться созданные объекты (коробки и органайзеры) -->
+  <div id="objects-container"></div>
+
+</div>
+
+<!-- Модальное окно редактирования ячеек у органайзера -->
+<div id="cell-modal" class="modal hidden">
+  <div class="modal-content">
+    <span class="close" data-close="cell-modal">&times;</span>
+    <h2>Setting up a cell</h2>
+    <p>Cell number: <span id="cell-number"></span></p>
+    <label for="cell-product">Product in cell:</label>
+    <input type="text" id="cell-product" />
+
+    <label for="cell-quantity">Quantity:</label>
+    <div class="quantity-controls">
+      <button id="cell-quantity-minus">-</button>
+      <input type="number" id="cell-quantity" value="0" min="0" />
+      <button id="cell-quantity-plus">+</button>
+    </div>
+    <button id="cell-save-btn">Save</button>
   </div>
-  
+</div>
 
-  <div id="trash-can">
-    <!-- Можно использовать любую картинку/иконку, либо символ ♻ -->
-    <img src="../media/trash.png" alt="Trash" />
-  </div>
+<!-- Кнопка для экспорта лога в текстовый файл -->
+<div id="export-log-section" class="hidden">
+  <button id="export-log-btn" class="export-log-button">Export log</button>
+</div>
 
-
+<!-- Корзина мусора в левом нижнем углу (если нужно удалять объекты анимацией) -->
+<div id="trash-can">
+  <img src="../media/trash.png" alt="Trash" />
+</div>
 
   <script src="script.js"></script>
 

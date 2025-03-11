@@ -101,14 +101,14 @@ function registerUser() {
   const password = document.getElementById("reg-password").value;
 
   if (!username || !password) {
-    alert("Пожалуйста, введите имя и пароль.");
+    alert("Please enter your name and password.");
     return;
   }
 
   const users = getUsersFromStorage();
   // Проверяем, не занято ли имя
   if (users.some(u => u.username === username)) {
-    alert("Пользователь с таким именем уже существует!");
+    alert("A user with this name already exists!");
     return;
   }
 
@@ -119,7 +119,7 @@ function registerUser() {
   // Логируем событие
   createBlock(username, "REGISTER", { username });
 
-  alert("Регистрация успешна!");
+  alert("Registration successful!");
   closeModal("register-modal");
 }
 
@@ -129,7 +129,7 @@ function loginUser() {
   const password = document.getElementById("login-password").value;
 
   if (!username || !password) {
-    alert("Пожалуйста, введите имя и пароль.");
+    alert("Please enter your name and password.");
     return;
   }
 
@@ -151,7 +151,7 @@ function loginUser() {
 
     closeModal("login-modal");
   } else {
-    alert("Неверные имя или пароль!");
+    alert("Incorrect username or password! Be careful. Have you forgotten?");
   }
 }
 
@@ -209,7 +209,7 @@ function onObjectTypeChange() {
 function createObject() {
   const type = document.getElementById("object-type").value;
   if (!type) {
-    alert("Выберите тип объекта!");
+    alert("Select object type!");
     return;
   }
 
@@ -283,12 +283,12 @@ function renderObjects() {
       card.style.backgroundColor = obj.color;
       const title = document.createElement("div");
       title.classList.add("object-title");
-      title.textContent = obj.purpose || "Без названия (коробка)";
+      title.textContent = obj.purpose || "Untitled (box)";
       card.appendChild(title);
 
       // При клике на коробку: можно показать меню (если нужно).
       card.addEventListener("click", () => {
-        alert(`Это коробка: ${obj.purpose}\nID: ${obj.id}`);
+        alert(`This box: ${obj.purpose}\nID: ${obj.id}`);
       });
 
     } 
@@ -297,7 +297,7 @@ function renderObjects() {
       card.style.borderColor = obj.color; // цвет рамки — цвет органайзера
       const title = document.createElement("div");
       title.classList.add("object-title");
-      title.textContent = obj.purpose || "Без названия (органайзер)";
+      title.textContent = obj.purpose || "Untitled (organizer)";
       card.appendChild(title);
 
       // Блок ячеек
@@ -330,7 +330,7 @@ function renderObjects() {
 
       // При клике на саму карточку органайзера (не на ячейки)
       card.addEventListener("click", () => {
-        alert(`Это органайзер: ${obj.purpose}\nID: ${obj.id}\nКоличество ячеек: ${obj.cells.length}`);
+        alert(`This is an organizer: ${obj.purpose}\nID: ${obj.id}\nNumber of cells: ${obj.cells.length}`);
       });
     }
 
@@ -339,14 +339,14 @@ function renderObjects() {
     actionsDiv.classList.add("object-actions");
 
     const duplicateBtn = document.createElement("button");
-    duplicateBtn.textContent = "Дублировать";
+    duplicateBtn.textContent = "Duplicate";
     duplicateBtn.addEventListener("click", (e) => {
       e.stopPropagation();
       duplicateObject(obj.id);
     });
 
     const deleteBtn = document.createElement("button");
-    deleteBtn.textContent = "Удалить";
+    deleteBtn.textContent = "Delete";
     deleteBtn.addEventListener("click", (e) => {
       e.stopPropagation();
       deleteObjectWithAnimation(obj.id, card);
@@ -433,7 +433,7 @@ function changeCellQuantity(delta) {
 }
 
 /*******************************************************
- * Новые функции: дублирование и удаление с анимацией
+ функции: дублирование и удаление с анимацией
  *******************************************************/
 
 // Дублировать объект

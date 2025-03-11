@@ -1,162 +1,253 @@
-/* Styles for ease of perception */
-
-/* Hidden element */
+/* Скрытый элемент */
 .hidden {
-    display: none;
-  }
-  
-/* Basic styles for the page */
-  body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-  }
-  
-  header {
-    background-color: #333;
-    color: #fff;
-    padding: 10px;
-  }
-  
-/* Registration/Login buttons */
-  #auth-section {
-    margin: 10px;
-  }
-  
-/* Modal windows */
-  .modal {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    overflow: auto;
-    background-color: rgba(0, 0, 0, 0.5); /* полупрозрачный фон */
-    z-index: 999;
-  }
-  
-  .modal-content {
-    background-color: #fff;
-    margin: 10% auto;
-    padding: 20px;
-    width: 400px;
-    position: relative;
-    border-radius: 5px;
-  }
-  
-  /* Кнопка закрытия (X) */
-  .close {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    cursor: pointer;
-  }
-  
-  /* Стили для формы регистрации/логина */
-  .modal-content label {
-    display: block;
-    margin: 10px 0 5px;
-  }
-  
-  .modal-content input {
-    width: 100%;
-    padding: 8px;
-    margin-bottom: 10px;
-  }
-  
-  .modal-content button {
-    padding: 8px 16px;
-    cursor: pointer;
-  }
-  
-  /* Основной контент после входа */
-  #main-content {
-    margin: 20px;
-  }
-  
-  /* Информация о пользователе (имя + кнопка «Выйти») */
-  .user-info {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 20px;
-  }
-  
-  #objects-container {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 20px;
-  }
-  
-  /* Карточка объекта (коробки или органайзера) */
-  .object-card {
-    border: 2px solid #ccc;
-    padding: 10px;
-    width: 200px;
-    border-radius: 5px;
-    cursor: pointer;
-    position: relative;
-  }
-  
-  /* Название / предназначение объекта */
-  .object-title {
-    font-weight: bold;
-    margin-bottom: 10px;
-  }
-  
-  /* Для органайзера – блок ячеек */
-  .organizer-cells {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 5px;
-  }
-  
-  /* Отдельная ячейка */
-  .organizer-cell {
-    width: 30px;
-    height: 30px;
-    background-color: #eee;
-    border-radius: 5px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 10px;
-    cursor: pointer;
-  }
-  
-  /* Эффект «подергивания и свечения» можно имитировать анимацией при клике */
-  .organizer-cell.active {
-    animation: shake 0.3s;
-    box-shadow: 0 0 10px yellow;
-  }
-  
-  @keyframes shake {
-    0% { transform: translate(0, 0); }
-    20% { transform: translate(-2px, 0); }
-    40% { transform: translate(2px, 0); }
-    60% { transform: translate(-2px, 0); }
-    80% { transform: translate(2px, 0); }
-    100% { transform: translate(0, 0); }
-  }
-  
-  /* Управление количеством */
-  .quantity-controls {
-    display: flex;
-    align-items: center;
-    gap: 5px;
-  }
-  
-  .quantity-controls button {
-    width: 30px;
-    height: 30px;
-  }
-  
-  .quantity-controls input {
-    width: 50px;
-    text-align: center;
-  }
-  
-  /* Корзина мусора в левом нижнем углу */
+  display: none;
+}
+
+/* Базовые стили для страницы */
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background: #f8f9fa; /* Светлый фон для всего сайта */
+}
+
+header {
+  background-color: #333;
+  color: #fff;
+  padding: 10px;
+  text-align: center;
+}
+
+/* Блок регистрации/входа */
+#auth-section {
+  margin: 40px auto;
+  text-align: center;
+}
+
+/* Крупные анимированные кнопки */
+.big-button {
+  background: linear-gradient(to right, #4facfe 0%, #00f2fe 100%);
+  color: #fff;
+  font-size: 1.3rem;
+  padding: 12px 30px;
+  border: none;
+  border-radius: 30px;
+  cursor: pointer;
+  margin: 0 10px;
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.big-button:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 10px rgba(0,0,0,0.2);
+}
+
+/* Модальные окна */
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.5); /* полупрозрачный фон */
+  z-index: 999;
+}
+
+.modal-content {
+  background-color: #fff;
+  margin: 5% auto;
+  padding: 20px;
+  width: 400px;
+  position: relative;
+  border-radius: 8px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+}
+
+/* Кнопка закрытия (X) */
+.close {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  cursor: pointer;
+  font-size: 24px;
+}
+
+/* Стили для формы регистрации/логина */
+.modal-content label {
+  display: block;
+  margin: 10px 0 5px;
+}
+
+.modal-content input {
+  width: 100%;
+  padding: 8px;
+  margin-bottom: 10px;
+  font-size: 1rem;
+}
+
+.modal-content button {
+  padding: 10px 20px;
+  cursor: pointer;
+  border-radius: 8px;
+  border: none;
+  background: #007bff;
+  color: #fff;
+  font-size: 1rem;
+  transition: background 0.3s;
+}
+
+.modal-content button:hover {
+  background: #0056b3;
+}
+
+/* Основной контент после входа */
+#main-content {
+  max-width: 1200px;
+  margin: 20px auto;
+  padding: 0 20px;
+}
+
+/* Информация о пользователе (имя + кнопка «Выйти») */
+.user-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+/* Кнопка "Выйти" */
+.logout-button {
+  background: #ff7b7b;
+  color: #fff;
+  border-radius: 30px;
+  padding: 8px 16px;
+  transition: transform 0.2s;
+}
+
+.logout-button:hover {
+  transform: scale(1.05);
+}
+
+/* Кнопка "Добавить объект" */
+.add-object-button {
+  background: #28a745;
+  color: #fff;
+  border-radius: 30px;
+  padding: 10px 24px;
+  margin-bottom: 20px;
+  font-size: 1rem;
+  transition: transform 0.2s;
+  border: none;
+  cursor: pointer;
+}
+
+.add-object-button:hover {
+  transform: scale(1.05);
+}
+
+/* Кнопка "Экспорт лога" */
+.export-log-button {
+  background: #17a2b8;
+  color: #fff;
+  border-radius: 30px;
+  padding: 10px 24px;
+  font-size: 1rem;
+  border: none;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+.export-log-button:hover {
+  transform: scale(1.05);
+}
+
+#objects-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: flex-start;
+}
+
+/* Карточка объекта (коробки или органайзеры) */
+.object-card {
+  position: relative;
+  width: 220px;
+  min-height: 100px;
+  border-radius: 12px;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+  cursor: pointer;
+  background: #fff;
+  padding: 15px;
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.object-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 15px rgba(0,0,0,0.15);
+}
+
+/* Название / предназначение объекта */
+.object-title {
+  font-weight: bold;
+  margin-bottom: 10px;
+  font-size: 1.1rem;
+}
+
+/* Для органайзера – блок ячеек */
+.organizer-cells {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+}
+
+/* Отдельная ячейка */
+.organizer-cell {
+  width: 32px;
+  height: 32px;
+  background-color: #eee;
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  cursor: pointer;
+}
+
+/* Эффект «подергивания и свечения» */
+.organizer-cell.active {
+  animation: shake 0.3s;
+  box-shadow: 0 0 10px yellow;
+}
+
+@keyframes shake {
+  0% { transform: translate(0, 0); }
+  20% { transform: translate(-2px, 0); }
+  40% { transform: translate(2px, 0); }
+  60% { transform: translate(-2px, 0); }
+  80% { transform: translate(2px, 0); }
+  100% { transform: translate(0, 0); }
+}
+
+/* Управление количеством */
+.quantity-controls {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  margin: 10px 0;
+}
+
+.quantity-controls button {
+  width: 30px;
+  height: 30px;
+}
+
+.quantity-controls input {
+  width: 50px;
+  text-align: center;
+}
+
+/* Корзина мусора в левом нижнем углу (если нужно удалять объекты анимацией) */
 #trash-can {
   position: fixed;
   bottom: 20px;
@@ -171,12 +262,12 @@
   height: auto;
 }
 
-/* Блок действий (дублировать/удалить), показывается при hover */
+/* Блок действий (дублировать/удалить), если вы оставляете эти кнопки при наведении */
 .object-actions {
   position: absolute;
   top: 5px;
   right: 5px;
-  display: none; /* Скрыто по умолчанию */
+  display: none; /* скрыто по умолчанию */
 }
 
 .object-card:hover .object-actions {
@@ -188,4 +279,13 @@
   cursor: pointer;
   padding: 5px;
   font-size: 12px;
+  border: none;
+  border-radius: 4px;
+  background: #ffc107;
+  color: #000;
+  transition: background 0.2s;
+}
+
+.object-actions button:hover {
+  background: #e0a800;
 }
