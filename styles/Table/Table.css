@@ -1,0 +1,91 @@
+/* ============ Reset some defaults ============ */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  /* Body background, Google-like font, etc. */
+  body {
+    font-family: 'Roboto', sans-serif;
+    background: #f8f9fa;
+    color: #202124;
+  }
+  
+  header {
+    background: #fff;
+    border-bottom: 1px solid #ddd;
+    padding: 10px 20px;
+    font-size: 1.2rem;
+    font-weight: 500;
+  }
+  
+  /* Main container for the table */
+  .table-container {
+    max-width: 1200px;
+    margin: 20px auto;
+    padding: 0 20px;
+  }
+  
+  /* "Add Row" button */
+  .primary-button {
+    background: #4285f4;
+    color: #fff;
+    padding: 8px 16px;
+    border-radius: 4px;
+    border: none;
+    font-size: 1rem;
+    cursor: pointer;
+    margin-bottom: 10px;
+    transition: background 0.3s, transform 0.2s;
+  }
+  .primary-button:hover {
+    background: #3073dc;
+    transform: translateY(-1px);
+  }
+  
+  /* Table styling */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    background: #fff;
+    box-shadow: 0 1px 3px rgba(60,64,67,0.2);
+    border-radius: 4px;
+    overflow: hidden; /* if we want rounded corners */
+  }
+  
+  thead {
+    background: #f1f3f4;
+  }
+  thead th {
+    text-align: left;
+    padding: 10px;
+    font-weight: 500;
+    font-size: 0.9rem;
+    border-bottom: 1px solid #ddd;
+  }
+  
+  tbody tr {
+    border-bottom: 1px solid #eee;
+  }
+  tbody tr:hover {
+    background: #fafafa;
+  }
+  
+  td {
+    padding: 8px 10px;
+  }
+  
+  /* Inputs inside the table cells */
+  td input {
+    width: 100%;
+    padding: 6px;
+    border: 1px solid #dadce0;
+    border-radius: 4px;
+    font-size: 0.9rem;
+  }
+  td input:focus {
+    outline: none;
+    border-color: #4285f4;
+  }
+  
