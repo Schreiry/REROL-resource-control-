@@ -7,64 +7,65 @@
 /* khm, khm. . .. May you be favored by the program code of the mundane.
  May the comments of the saints help you */
 
+/* <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><> */
 
-/* Hidden element */
+/* Hide elements when needed */
 .hidden {
   display: none;
 }
 
-
-/* Basic styles for the page */
-body {
-  font-family: Arial, sans-serif;
+/* Remove standard indents/paddings (if desired) */
+* {
   margin: 0;
   padding: 0;
-  background: #e5e5df; /*  website background*/
+  box-sizing: border-box;
 }
 
-header {
-  background-color: #333;
-  color: #fff;
-  padding: 10px;
-  text-align: center;
+/* Base styles for the page */
+body {
+  font-family: 'Roboto', Arial, sans-serif; /* Похоже на стиль Google */
+  background: #f8f9fa; /* Светлый фон, как на сервисах Google */
+  color: #202124;      /* Тёмный текст */
 }
 
-/* Registration/entry unit */
+
+
+/* ============ AUTH SECTION ============ */
 #auth-section {
   margin: 40px auto;
   text-align: center;
 }
 
-/* Large animated buttons */
+/* Кнопки (Registration, Log-In, etc.) в более минималистичном стиле */
 .big-button {
-  background: linear-gradient(to right, #4facfe 0%, #00f2fe 100%);
+  background: #4285f4;  /* Цвет, напоминающий Google */
   color: #fff;
-  font-size: 1.3rem;
-  padding: 12px 30px;
+  font-size: 1rem;
+  padding: 12px 24px;
   border: none;
-  border-radius: 30px;
+  border-radius: 4px;
   cursor: pointer;
   margin: 0 10px;
-  transition: transform 0.3s, box-shadow 0.3s;
+  transition: background 0.3s, transform 0.3s;
 }
-
 .big-button:hover {
-  transform: scale(1.05);
-  box-shadow: 0 0 10px rgba(0,0,0,0.2);
+  background: #3073dc; /* Темнее при наведении */
+  transform: translateY(-1px);
 }
 
-/* Modal windows */
+/* ============ MODALS ============ */
 .modal {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  overflow: auto;
-  background-color: rgba(0, 0, 0, 0.5); /* semi-transparent background */
+  background-color: rgba(0,0,0,0.5); /* Полупрозрачный тёмный фон */
   z-index: 999;
+  overflow-y: auto; /* Прокрутка, если окно не помещается */
 }
 
+/* Всплывающий блок */
 .modal-content {
   background-color: #fff;
   margin: 5% auto;
@@ -72,54 +73,57 @@ header {
   width: 400px;
   position: relative;
   border-radius: 8px;
-  box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
 }
 
-/* Close button (X) */
+/* Кнопка закрытия (X) */
 .close {
   position: absolute;
   top: 10px;
   right: 10px;
   cursor: pointer;
-  font-size: 24px;
+  font-size: 20px;
+  color: #555;
 }
 
-/* Styles for registration/login form */
+/* Стили для форм (регистрация, вход, создание объекта) */
 .modal-content label {
   display: block;
-  margin: 10px 0 5px;
+  margin: 15px 0 5px;
+  font-weight: 500;
+  color: #3c4043;
 }
-
-.modal-content input {
+.modal-content input,
+.modal-content select {
   width: 100%;
   padding: 8px;
   margin-bottom: 10px;
   font-size: 1rem;
+  border: 1px solid #dadce0;
+  border-radius: 4px;
 }
-
 .modal-content button {
-  padding: 10px 20px;
-  cursor: pointer;
-  border-radius: 8px;
-  border: none;
-  background: #007bff;
+  background: #4285f4;
   color: #fff;
+  padding: 10px 16px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
   font-size: 1rem;
   transition: background 0.3s;
 }
-
 .modal-content button:hover {
-  background: #0056b3;
+  background: #3073dc;
 }
 
-/* Main content after login */
+/* ============ MAIN CONTENT ============ */
 #main-content {
   max-width: 1200px;
   margin: 20px auto;
   padding: 0 20px;
 }
 
-/* User information (name + “Logout” button) */
+/* Верхняя панель с именем пользователя и кнопкой выхода */
 .user-info {
   display: flex;
   justify-content: space-between;
@@ -127,97 +131,100 @@ header {
   margin-bottom: 20px;
 }
 
-/* Exit button */
+/* Кнопка "Log out" */
 .logout-button {
-  background: #ff7b7b;
+  background: #d93025;
   color: #fff;
-  border-radius: 30px;
+  border: none;
+  border-radius: 4px;
   padding: 8px 16px;
-  transition: transform 0.2s;
+  cursor: pointer;
+  transition: background 0.3s, transform 0.2s;
 }
-
 .logout-button:hover {
-  transform: scale(1.05);
+  background: #c5221f;
+  transform: translateY(-1px);
 }
 
-/* “Add Object” button */
+/* Кнопка "Add object" */
 .add-object-button {
-  background: #28a745;
+  background: #34a853; /* Зелёный */
   color: #fff;
-  border-radius: 30px;
+  border-radius: 4px;
   padding: 10px 24px;
   margin-bottom: 20px;
   font-size: 1rem;
-  transition: transform 0.2s;
   border: none;
   cursor: pointer;
+  transition: background 0.2s, transform 0.2s;
 }
-
 .add-object-button:hover {
-  transform: scale(1.05);
+  background: #238642;
+  transform: translateY(-1px);
 }
 
-/* “Export Log” button */
+/* Кнопка "Export log" */
 .export-log-button {
-  background: #17a2b8;
-  color: #fff;
-  border-radius: 30px;
+  background: #fbbc05; /* Жёлтый */
+  color: #000;
+  border-radius: 4px;
   padding: 10px 24px;
   font-size: 1rem;
   border: none;
   cursor: pointer;
-  transition: transform 0.2s;
+  transition: background 0.2s, transform 0.2s;
 }
-
 .export-log-button:hover {
-  transform: scale(1.05);
+  background: #e2a000;
+  transform: translateY(-1px);
 }
 
+/* ============ OBJECTS CONTAINER ============ */
+/* Главное изменение: align-items: flex-start, чтобы каждая карточка имела свою высоту */
 #objects-container {
   display: flex;
   flex-wrap: wrap;
   gap: 20px;
   justify-content: flex-start;
+  align-items: flex-start; /* <-- ключевой момент */
 }
 
-/* Object card (boxes or organizers) */
+/* ============ OBJECT CARDS ============ */
 .object-card {
   position: relative;
-  width: 220px;
-  min-height: 100px;
-  border-radius: 12px;
-  box-shadow: 0 3px 10px rgba(0,0,0,0.1);
-  cursor: pointer;
+  width: 220px;   /* фиксированная ширина, но без фиксированной высоты */
+  /* min-height: 100px; <-- УДАЛЯЕМ, чтобы карточка могла растягиваться по высоте */
+  border-radius: 8px;
+  box-shadow: 0 1px 3px rgba(60,64,67,0.3);
   background: #fff;
-  padding: 15px;
-  transition: transform 0.3s, box-shadow 0.3s;
+  padding: 16px;
+  transition: box-shadow 0.3s, transform 0.3s;
+  cursor: pointer;
 }
-
 .object-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 10px 15px rgba(0,0,0,0.15);
+  box-shadow: 0 4px 12px rgba(60,64,67,0.2);
+  transform: translateY(-2px);
 }
 
-/* Name / purpose of the object */
+/* Название / purpose объекта */
 .object-title {
-  font-weight: bold;
+  font-weight: 600;
   margin-bottom: 10px;
-  font-size: 1.1rem;
+  font-size: 1rem;
+  color: #202124;
 }
 
-/* For organizer - cell block */
+/* ============ ORGANIZER CELLS ============ */
 .organizer-cells {
   display: flex;
   flex-wrap: wrap;
   gap: 5px;
 }
-
-/* Separate cell */
 .organizer-cell {
   width: 32px;
   height: 32px;
   background-color: #eee;
-  border-radius: 5px;
+  border-radius: 4px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -225,12 +232,11 @@ header {
   cursor: pointer;
 }
 
-/* “twitch and glow” effect /* */
+/* Эффект "подрагивания" при клике */
 .organizer-cell.active {
   animation: shake 0.3s;
-  box-shadow: 0 0 10px rgba(238, 205, 87, 0.783);
+  box-shadow: 0 0 6px rgba(255,230,0,0.8);
 }
-
 @keyframes shake {
   0% { transform: translate(0, 0); }
   20% { transform: translate(-2px, 0); }
@@ -240,25 +246,63 @@ header {
   100% { transform: translate(0, 0); }
 }
 
-/* Quantity control */
+/* Количество в ячейке */
 .quantity-controls {
   display: flex;
   align-items: center;
   gap: 5px;
   margin: 10px 0;
 }
-
 .quantity-controls button {
   width: 30px;
   height: 30px;
 }
-
 .quantity-controls input {
   width: 50px;
   text-align: center;
 }
 
-/* Trash can in the lower left corner  */
+/* ============ PROGRESS BAR (Box fill) ============ */
+.box-fill-bar {
+  width: 100%;
+  height: 8px;
+  background-color: #dadce0;
+  border-radius: 4px;
+  overflow: hidden;
+  margin-bottom: 8px;
+}
+.box-fill-bar-inner {
+  height: 100%;
+  background-color: #4285f4;
+  transition: width 0.3s;
+}
+
+/* ============ ACTION BUTTONS (Duplicate/Delete) ============ */
+.object-actions {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  display: none; /* скрыты по умолчанию */
+}
+.object-card:hover .object-actions {
+  display: block;
+}
+.object-actions button {
+  margin-left: 5px;
+  cursor: pointer;
+  padding: 5px 8px;
+  font-size: 12px;
+  border: none;
+  border-radius: 4px;
+  background: #f1f3f4;
+  color: #202124;
+  transition: background 0.2s;
+}
+.object-actions button:hover {
+  background: #dadce0;
+}
+
+/* ============ TRASH CAN ============ */
 #trash-can {
   position: fixed;
   bottom: 20px;
@@ -267,36 +311,7 @@ header {
   height: 50px;
   z-index: 1000;
 }
-
 #trash-can img {
   width: 100%;
   height: auto;
-}
-
-/* Action block (duplicate/delete) if you leave these buttons when hovering */
-.object-actions {
-  position: absolute;
-  top: 5px;
-  right: 5px;
-  display: none; /* скрыто по умолчанию */
-}
-
-.object-card:hover .object-actions {
-  display: block;
-}
-
-.object-actions button {
-  margin-left: 5px;
-  cursor: pointer;
-  padding: 5px;
-  font-size: 12px;
-  border: none;
-  border-radius: 4px;
-  background: #ffc107;
-  color: #000;
-  transition: background 0.2s;
-}
-
-.object-actions button:hover {
-  background: #e0a800;
 }

@@ -1,0 +1,91 @@
+/* ============ HEADER ============ */
+header {
+    background-color: #fff;     /* Белая шапка */
+    border-bottom: 1px solid #ddd;
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px;
+    padding: 10px 20px;
+    text-align: left;
+    font-size: 1.2rem;
+    font-weight: 500;
+    transition: transform 0.3s, box-shadow 0.3s;
+  }
+  
+  header:hover {
+    background-color: #f1f3f4;
+    box-shadow: 0 8px 16px rgba(60, 64, 67, 0.2);
+    transform: translateY(-5px);
+    animation: shake 0.3s;
+  }
+  
+  @keyframes shake {
+    0% { transform: translateY(0); }
+    20% { transform: translateY(-2px); }
+    40% { transform: translateY(2px); }
+    60% { transform: translateY(-2px); }
+    80% { transform: translateY(2px); }
+    100% { transform: translateY(0); }
+  }
+  
+  .header-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 40px 50px;
+    background-color: #fff;
+    border-bottom: 1px solid #ddd;
+    border: none;
+    position: relative;
+  }
+  
+  .header-menu {
+    text-decoration: none;
+    display: flex;
+    gap: 20px;
+  }
+  
+  .header-menu a {
+    text-decoration: none;
+    color: #202124;
+    font-size: 25px;
+    margin: 20px;
+    transition: color 0.3s;
+  }
+  
+  .header-menu a:hover {
+    color: #4285f4;
+  }
+  
+  .header-logo {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+  
+  .header-logo img {
+    height: 240px;
+    padding: 40px;
+  }
+  
+  .header-actions {
+    display: flex;
+    align-items: center;
+  }
+  
+  .header-actions .export-log-button {
+    background: #4285f4;
+    color: #c8c8c8;
+    border-radius: 4px;
+    padding: 10px 24px;
+    font-size: 1rem;
+    border: none;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.2s;
+  }
+  
+  .header-actions .export-log-button:hover {
+    background: #1a4893d7;
+    transform: translateY(-1px);
+    color: whitesmoke;
+  }
+  
