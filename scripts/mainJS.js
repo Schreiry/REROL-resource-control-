@@ -13,8 +13,6 @@ let blockchain = [];
  * Helper function for generating a simple hash
  */
 function simpleHash(input) {
-  // The easiest way is to hash via the built-in btoa or MD5/SHA1 libraries.
-  // Here we use btoa + some "mixture" in a simplified way.
   return btoa(unescape(encodeURIComponent(input))).slice(0, 16);
 }
 
@@ -58,7 +56,7 @@ function loadBlockchain() {
 }
 
 /**
- * Store users in localStorage (easy way)
+ * Store users in localStorage
  */
 function getUsersFromStorage() {
   const usersStr = localStorage.getItem("users");
@@ -89,60 +87,39 @@ function setObjectsToStorage(objects) {
 loadBlockchain();
 
 /*******************************************************
- * Functions for registration/login/logout
+ * Registration / Login / Logout
  *******************************************************/
-
-/**
- * Open a modal window
- */
 function openModal(modalId) {
   document.getElementById(modalId).classList.remove("hidden");
 }
-
-/**
- * Close the modal window
- */
 function closeModal(modalId) {
   document.getElementById(modalId).classList.add("hidden");
 }
 
-/**
- * Registration
- */
 function registerUser() {
   const username = document.getElementById("reg-username").value.trim();
   const password = document.getElementById("reg-password").value;
-
   if (!username || !password) {
     alert("Please enter your username and password.");
     return;
   }
 
   const users = getUsersFromStorage();
-  // Check if the username is taken
   if (users.some(u => u.username === username)) {
     alert("A user with this name already exists!");
     return;
   }
-
-  // Create new user
   users.push({ username, password });
   setUsersToStorage(users);
 
-  // Log the event
   createBlock(username, "REGISTER", { username });
-
   alert("Registration successful!");
   closeModal("register-modal");
 }
 
-/**
- * Login
- */
 function loginUser() {
   const username = document.getElementById("login-username").value.trim();
   const password = document.getElementById("login-password").value;
-
   if (!username || !password) {
     alert("Please enter your username and password.");
     return;
@@ -150,48 +127,35 @@ function loginUser() {
 
   const users = getUsersFromStorage();
   const user = users.find(u => u.username === username && u.password === password);
-
   if (user) {
     currentUser = user.username;
-    // Log the event
     createBlock(currentUser, "LOGIN", { username: currentUser });
 
-    // Hide the auth section, show main content
     document.getElementById("auth-section").classList.add("hidden");
     document.getElementById("main-content").classList.remove("hidden");
     document.getElementById("export-log-section").classList.remove("hidden");
 
-    // Display the username
     document.getElementById("current-user").textContent = "User: " + currentUser;
-
     closeModal("login-modal");
   } else {
     alert("Incorrect username or password!");
   }
 }
 
-/**
- * Logout
- */
 function logoutUser() {
   if (currentUser) {
     createBlock(currentUser, "LOGOUT", { username: currentUser });
   }
   currentUser = null;
 
-  // Show the auth section again, hide main content
   document.getElementById("auth-section").classList.remove("hidden");
   document.getElementById("main-content").classList.add("hidden");
   document.getElementById("export-log-section").classList.add("hidden");
 }
 
 /*******************************************************
- * Functions for creating and displaying objects
+ * Create new objects
  *******************************************************/
-
-/**
- * Show the form for creating an object
- */
 function showCreateObjectModal() {
   // Reset fields
   document.getElementById("object-type").value = "";
@@ -213,7 +177,7 @@ function showCreateObjectModal() {
   document.getElementById("table-box-count").value = 0;
   document.getElementById("table-organizer-count").value = 0;
 
-  // Hide all parameter sections
+  // Hide param sections
   document.getElementById("box-params").classList.add("hidden");
   document.getElementById("organizer-params").classList.add("hidden");
   document.getElementById("table-params").classList.add("hidden");
@@ -221,18 +185,12 @@ function showCreateObjectModal() {
   openModal("create-object-modal");
 }
 
-/**
- * When changing the object type in the select
- */
 function onObjectTypeChange() {
   const type = document.getElementById("object-type").value;
-
-  // Hide all
   document.getElementById("box-params").classList.add("hidden");
   document.getElementById("organizer-params").classList.add("hidden");
   document.getElementById("table-params").classList.add("hidden");
 
-  // Show relevant section
   if (type === "box") {
     document.getElementById("box-params").classList.remove("hidden");
   } else if (type === "organizer") {
@@ -242,9 +200,6 @@ function onObjectTypeChange() {
   }
 }
 
-/**
- * Create an object (box, organizer, or table)
- */
 function createObject() {
   const type = document.getElementById("object-type").value;
   if (!type) {
@@ -253,9 +208,7 @@ function createObject() {
   }
 
   const objects = getObjectsFromStorage();
-
   if (type === "box") {
-    // Box params
     const color = document.getElementById("box-color").value;
     const purpose = document.getElementById("box-purpose").value.trim();
     const capacity = parseInt(document.getElementById("box-capacity").value, 10);
@@ -271,22 +224,16 @@ function createObject() {
     };
     objects.push(newBox);
     setObjectsToStorage(objects);
-
     createBlock(currentUser, "CREATE_BOX", newBox);
 
   } else if (type === "organizer") {
-    // Organizer params
     const purpose = document.getElementById("organizer-purpose").value.trim();
     const color = document.getElementById("organizer-color").value;
     const cellsCount = parseInt(document.getElementById("organizer-cells").value, 10);
 
     const cells = [];
     for (let i = 0; i < cellsCount; i++) {
-      cells.push({
-        cellIndex: i,
-        productName: "",
-        quantity: 0
-      });
+      cells.push({ cellIndex: i, productName: "", quantity: 0 });
     }
 
     const newOrganizer = {
@@ -298,11 +245,9 @@ function createObject() {
     };
     objects.push(newOrganizer);
     setObjectsToStorage(objects);
-
     createBlock(currentUser, "CREATE_ORGANIZER", newOrganizer);
 
   } else if (type === "table") {
-    // Table params
     const orientation = document.getElementById("table-orientation").value;
     const tableNumber = document.getElementById("table-number").value.trim();
     const boxCount = parseInt(document.getElementById("table-box-count").value, 10);
@@ -318,7 +263,6 @@ function createObject() {
     };
     objects.push(newTable);
     setObjectsToStorage(objects);
-
     createBlock(currentUser, "CREATE_TABLE", newTable);
   }
 
@@ -326,31 +270,25 @@ function createObject() {
   renderObjects();
 }
 
-/**
- * Render all objects on the main page
- */
+/*******************************************************
+ * Render objects
+ *******************************************************/
 function renderObjects() {
   const container = document.getElementById("objects-container");
   container.innerHTML = "";
 
   const objects = getObjectsFromStorage();
-
   objects.forEach(obj => {
     const card = document.createElement("div");
     card.classList.add("object-card");
 
-    // Check the object type
     if (obj.type === "box") {
-      // Box color
       card.style.backgroundColor = obj.color || "#ffff00";
-
-      // Title
       const title = document.createElement("div");
       title.classList.add("object-title");
       title.textContent = obj.purpose || "Untitled (box)";
       card.appendChild(title);
 
-      // Capacity/items ratio
       const capacity = obj.capacity || 1;
       const items = obj.items || 0;
       const percent = Math.round((items / capacity) * 100);
@@ -360,7 +298,6 @@ function renderObjects() {
       ratioText.style.marginBottom = "5px";
       card.appendChild(ratioText);
 
-      // A small progress bar
       const fillBar = document.createElement("div");
       fillBar.classList.add("box-fill-bar");
       const fillBarInner = document.createElement("div");
@@ -369,24 +306,19 @@ function renderObjects() {
       fillBar.appendChild(fillBarInner);
       card.appendChild(fillBar);
 
-      // Click event
       card.addEventListener("click", () => {
         alert(`Box: ${obj.purpose}\nID: ${obj.id}\nItems: ${items}/${capacity}`);
       });
 
     } else if (obj.type === "organizer") {
-      // Organizer color
       card.style.backgroundColor = obj.color || "#ff0000";
-
       const title = document.createElement("div");
       title.classList.add("object-title");
       title.textContent = obj.purpose || "Untitled (organizer)";
       card.appendChild(title);
 
-      // Cells
       const cellsWrapper = document.createElement("div");
       cellsWrapper.classList.add("organizer-cells");
-
       obj.cells.forEach(cell => {
         const cellDiv = document.createElement("div");
         cellDiv.classList.add("organizer-cell");
@@ -398,24 +330,16 @@ function renderObjects() {
           setTimeout(() => cellDiv.classList.remove("active"), 500);
           openCellModal(obj.id, cell.cellIndex);
         });
-
         cellsWrapper.appendChild(cellDiv);
       });
-
       card.appendChild(cellsWrapper);
 
       card.addEventListener("click", () => {
-        alert(
-          `Organizer: ${obj.purpose}\n` +
-          `ID: ${obj.id}\n` +
-          `Number of cells: ${obj.cells.length}`
-        );
+        alert(`Organizer: ${obj.purpose}\nID: ${obj.id}\nCells: ${obj.cells.length}`);
       });
 
     } else if (obj.type === "table") {
-      // Table background
       card.style.backgroundColor = "#fafafa";
-
       const title = document.createElement("div");
       title.classList.add("object-title");
       title.textContent = `Table #${obj.tableNumber || "???"}`;
@@ -429,16 +353,24 @@ function renderObjects() {
       `;
       card.appendChild(info);
 
-      // Click => open table edit modal
       card.addEventListener("click", () => {
         openTableModal(obj.id);
       });
     }
 
-    // Action buttons (duplicate/delete)
+    // Actions: Edit / Duplicate / Delete
     const actionsDiv = document.createElement("div");
     actionsDiv.classList.add("object-actions");
 
+    // 1) Edit
+    const editBtn = document.createElement("button");
+    editBtn.textContent = "Edit";
+    editBtn.addEventListener("click", (e) => {
+      e.stopPropagation();
+      openEditObjectModal(obj.id);
+    });
+
+    // 2) Duplicate
     const duplicateBtn = document.createElement("button");
     duplicateBtn.textContent = "Duplicate";
     duplicateBtn.addEventListener("click", (e) => {
@@ -446,6 +378,7 @@ function renderObjects() {
       duplicateObject(obj.id);
     });
 
+    // 3) Delete
     const deleteBtn = document.createElement("button");
     deleteBtn.textContent = "Delete";
     deleteBtn.addEventListener("click", (e) => {
@@ -453,6 +386,7 @@ function renderObjects() {
       deleteObjectWithAnimation(obj.id, card);
     });
 
+    actionsDiv.appendChild(editBtn);
     actionsDiv.appendChild(duplicateBtn);
     actionsDiv.appendChild(deleteBtn);
     card.appendChild(actionsDiv);
@@ -462,35 +396,24 @@ function renderObjects() {
 }
 
 /*******************************************************
- * Table editing (user wants to change table parameters anytime)
+ * Table editing (user wants to change table parameters)
  *******************************************************/
-
-/**
- * Open a modal window to edit a specific table
- */
 function openTableModal(tableId) {
   const objects = getObjectsFromStorage();
   const tableObj = objects.find(o => o.id === tableId);
   if (!tableObj) return;
 
-  // Fill the fields
   document.getElementById("edit-table-id").textContent = tableObj.id;
   document.getElementById("edit-table-orientation").value = tableObj.orientation;
   document.getElementById("edit-table-number").value = tableObj.tableNumber;
   document.getElementById("edit-table-box-count").value = tableObj.boxCount;
   document.getElementById("edit-table-organizer-count").value = tableObj.organizerCount;
 
-  // Store the ID in the modal
   const modal = document.getElementById("table-modal");
   modal.setAttribute("data-table-id", tableId);
-
-  // Show the modal
   modal.classList.remove("hidden");
 }
 
-/**
- * Save changes to the table
- */
 function saveTableChanges() {
   const modal = document.getElementById("table-modal");
   const tableId = parseInt(modal.getAttribute("data-table-id"), 10);
@@ -504,15 +427,12 @@ function saveTableChanges() {
   const tableObj = objects.find(o => o.id === tableId);
   if (!tableObj) return;
 
-  // Update
   tableObj.orientation = orientation;
   tableObj.tableNumber = tableNumber;
   tableObj.boxCount = boxCount;
   tableObj.organizerCount = organizerCount;
 
   setObjectsToStorage(objects);
-
-  // Log
   createBlock(currentUser, "UPDATE_TABLE", {
     tableId,
     orientation,
@@ -521,33 +441,25 @@ function saveTableChanges() {
     organizerCount
   });
 
-  // Close modal
   modal.classList.add("hidden");
-
-  // Re-render
   renderObjects();
 }
 
 /*******************************************************
- * Functions for working with organizer cells
+ * Organizer cell editing
  *******************************************************/
-
-/**
- * Open a modal window to edit a specific cell
- */
 function openCellModal(organizerId, cellIndex) {
   const cellModal = document.getElementById("cell-modal");
   cellModal.setAttribute("data-organizer-id", organizerId);
   cellModal.setAttribute("data-cell-index", cellIndex);
 
-  // Find the cell in the data
   const objects = getObjectsFromStorage();
   const organizer = objects.find(o => o.id === organizerId);
   if (!organizer) return;
 
   const cellData = organizer.cells.find(c => c.cellIndex === cellIndex);
+  if (!cellData) return;
 
-  // Fill in the fields
   document.getElementById("cell-number").textContent = cellIndex;
   document.getElementById("cell-product").value = cellData.productName;
   document.getElementById("cell-quantity").value = cellData.quantity;
@@ -555,9 +467,6 @@ function openCellModal(organizerId, cellIndex) {
   openModal("cell-modal");
 }
 
-/**
- * Save changes in the cell
- */
 function saveCellChanges() {
   const cellModal = document.getElementById("cell-modal");
   const organizerId = parseInt(cellModal.getAttribute("data-organizer-id"), 10);
@@ -566,7 +475,6 @@ function saveCellChanges() {
   const productName = document.getElementById("cell-product").value.trim();
   const quantity = parseInt(document.getElementById("cell-quantity").value, 10);
 
-  // Find the organizer
   const objects = getObjectsFromStorage();
   const organizer = objects.find(o => o.id === organizerId);
   if (!organizer) return;
@@ -574,28 +482,15 @@ function saveCellChanges() {
   const cellData = organizer.cells.find(c => c.cellIndex === cellIndex);
   if (!cellData) return;
 
-  // Update
   cellData.productName = productName;
   cellData.quantity = quantity;
 
-  // Save
   setObjectsToStorage(objects);
-
-  // Log
-  createBlock(currentUser, "UPDATE_CELL", {
-    organizerId,
-    cellIndex,
-    productName,
-    quantity
-  });
+  createBlock(currentUser, "UPDATE_CELL", { organizerId, cellIndex, productName, quantity });
 
   closeModal("cell-modal");
   renderObjects();
 }
-
-/**
- * Decrease/increase quantity of product in the cell
- */
 function changeCellQuantity(delta) {
   const input = document.getElementById("cell-quantity");
   let value = parseInt(input.value, 10);
@@ -605,40 +500,133 @@ function changeCellQuantity(delta) {
 }
 
 /*******************************************************
- * functions: duplication and deletion with animation
+ * Edit an existing object (new feature)
  *******************************************************/
+let editObjectId = null; // to store which object we are editing
 
-/**
- * Duplicate the object
- */
+function openEditObjectModal(objectId) {
+  editObjectId = objectId;
+  const objects = getObjectsFromStorage();
+  const obj = objects.find(o => o.id === objectId);
+  if (!obj) return;
+
+  // Show the modal
+  const modal = document.getElementById("edit-object-modal");
+  modal.classList.remove("hidden");
+
+  // Hide all param sections
+  document.getElementById("edit-box-params").classList.add("hidden");
+  document.getElementById("edit-organizer-params").classList.add("hidden");
+  document.getElementById("edit-table-params").classList.add("hidden");
+
+  // Fill common fields
+  const typeSelect = document.getElementById("edit-object-type");
+  typeSelect.value = obj.type;
+  typeSelect.disabled = true; // can't change type
+
+  if (obj.type === "box") {
+    document.getElementById("edit-box-params").classList.remove("hidden");
+    document.getElementById("edit-box-color").value = obj.color;
+    document.getElementById("edit-box-purpose").value = obj.purpose;
+    document.getElementById("edit-box-capacity").value = obj.capacity;
+    document.getElementById("edit-box-items").value = obj.items;
+
+  } else if (obj.type === "organizer") {
+    document.getElementById("edit-organizer-params").classList.remove("hidden");
+    document.getElementById("edit-organizer-purpose").value = obj.purpose;
+    document.getElementById("edit-organizer-color").value = obj.color;
+    document.getElementById("edit-organizer-cells").value = obj.cells.length;
+
+  } else if (obj.type === "table") {
+    document.getElementById("edit-table-params").classList.remove("hidden");
+    document.getElementById("edit-table-orientation2").value = obj.orientation;
+    document.getElementById("edit-table-number2").value = obj.tableNumber;
+    document.getElementById("edit-table-box-count2").value = obj.boxCount;
+    document.getElementById("edit-table-organizer-count2").value = obj.organizerCount;
+  }
+}
+
+function saveEditedObject() {
+  if (!editObjectId) return;
+
+  const objects = getObjectsFromStorage();
+  const obj = objects.find(o => o.id === editObjectId);
+  if (!obj) return;
+
+  if (obj.type === "box") {
+    obj.color = document.getElementById("edit-box-color").value;
+    obj.purpose = document.getElementById("edit-box-purpose").value.trim();
+    obj.capacity = parseInt(document.getElementById("edit-box-capacity").value, 10);
+    obj.items = parseInt(document.getElementById("edit-box-items").value, 10);
+
+    createBlock(currentUser, "UPDATE_BOX", {
+      id: obj.id, color: obj.color, purpose: obj.purpose, capacity: obj.capacity, items: obj.items
+    });
+
+  } else if (obj.type === "organizer") {
+    obj.purpose = document.getElementById("edit-organizer-purpose").value.trim();
+    obj.color = document.getElementById("edit-organizer-color").value;
+    const newCellsCount = parseInt(document.getElementById("edit-organizer-cells").value, 10);
+
+    // If user changed cells count, we can either do nothing or adjust array
+    if (newCellsCount > obj.cells.length) {
+      // add extra cells
+      for (let i = obj.cells.length; i < newCellsCount; i++) {
+        obj.cells.push({ cellIndex: i, productName: "", quantity: 0 });
+      }
+    } else if (newCellsCount < obj.cells.length) {
+      // user is shrinking? We'll keep it simple and just slice
+      obj.cells = obj.cells.slice(0, newCellsCount);
+    }
+
+    createBlock(currentUser, "UPDATE_ORGANIZER", {
+      id: obj.id, purpose: obj.purpose, color: obj.color, cellsCount: obj.cells.length
+    });
+
+  } else if (obj.type === "table") {
+    obj.orientation = document.getElementById("edit-table-orientation2").value;
+    obj.tableNumber = document.getElementById("edit-table-number2").value.trim();
+    obj.boxCount = parseInt(document.getElementById("edit-table-box-count2").value, 10);
+    obj.organizerCount = parseInt(document.getElementById("edit-table-organizer-count2").value, 10);
+
+    createBlock(currentUser, "UPDATE_TABLE", {
+      id: obj.id, orientation: obj.orientation, tableNumber: obj.tableNumber,
+      boxCount: obj.boxCount, organizerCount: obj.organizerCount
+    });
+  }
+
+  setObjectsToStorage(objects);
+
+  // Close edit modal
+  document.getElementById("edit-object-modal").classList.add("hidden");
+  editObjectId = null;
+
+  // Re-render
+  renderObjects();
+}
+
+/*******************************************************
+ * Duplicate / Delete
+ *******************************************************/
 function duplicateObject(id) {
   const objects = getObjectsFromStorage();
   const obj = objects.find(o => o.id === id);
   if (!obj) return;
 
-  // Deep copy
   const newObj = JSON.parse(JSON.stringify(obj));
   newObj.id = Date.now();
 
   objects.push(newObj);
   setObjectsToStorage(objects);
 
-  // Logging
   createBlock(currentUser, "DUPLICATE_OBJECT", { originalId: id, newId: newObj.id });
-
-  // Re-render
   renderObjects();
 }
 
-/**
- * Delete the object with a nice "fly away" animation to the trash
- */
 function deleteObjectWithAnimation(id, cardElement) {
-  // 1) Clone the card
   const clone = cardElement.cloneNode(true);
   const rect = cardElement.getBoundingClientRect();
 
-  // Position the clone in the same coordinates
   clone.style.position = "absolute";
   clone.style.top = rect.top + "px";
   clone.style.left = rect.left + "px";
@@ -647,24 +635,18 @@ function deleteObjectWithAnimation(id, cardElement) {
   clone.style.transition = "transform 0.8s ease-in-out, opacity 0.8s ease-in-out";
   clone.style.zIndex = 1000;
 
-  // Add clone to the page
   document.body.appendChild(clone);
-
-  // 2) Remove the original from the DOM
   cardElement.remove();
 
-  // 3) Calculate the trash can center
   const trashRect = document.getElementById("trash-can").getBoundingClientRect();
   const targetX = trashRect.left + trashRect.width / 2 - (rect.left + rect.width / 2);
   const targetY = trashRect.top + trashRect.height / 2 - (rect.top + rect.height / 2);
 
-  // 4) Start the animation
   requestAnimationFrame(() => {
     clone.style.transform = `translate(${targetX}px, ${targetY}px) scale(0.1)`;
     clone.style.opacity = "0";
   });
 
-  // 5) When the animation finishes, remove the clone and the object from localStorage
   clone.addEventListener("transitionend", () => {
     clone.remove();
 
@@ -674,22 +656,15 @@ function deleteObjectWithAnimation(id, cardElement) {
       objects.splice(index, 1);
       setObjectsToStorage(objects);
 
-      // Logging
       createBlock(currentUser, "DELETE_OBJECT", { deletedId: id });
     }
-
-    // Update the display
     renderObjects();
   }, { once: true });
 }
 
 /*******************************************************
- * Log export functions
+ * Export log
  *******************************************************/
-
-/**
- * Upload log to text file
- */
 function exportLog() {
   let logText = "Index | Timestamp           | User        | Action            | Data\n";
   logText += "-------------------------------------------------------------------------\n";
@@ -711,18 +686,16 @@ function exportLog() {
 }
 
 /*******************************************************
- * Attach event listeners when the page loads
+ * Attach event listeners on page load
  *******************************************************/
 window.addEventListener("DOMContentLoaded", () => {
-  // Load blockchain from localStorage
   loadBlockchain();
 
-  // Buttons for opening modals
   document.getElementById("register-btn").addEventListener("click", () => openModal("register-modal"));
   document.getElementById("login-btn").addEventListener("click", () => openModal("login-modal"));
   document.getElementById("add-object-btn").addEventListener("click", showCreateObjectModal);
 
-  // Modal close buttons (X)
+  // close modals
   document.querySelectorAll(".close").forEach(closeBtn => {
     closeBtn.addEventListener("click", (e) => {
       const modalId = e.target.getAttribute("data-close");
@@ -730,33 +703,26 @@ window.addEventListener("DOMContentLoaded", () => {
     });
   });
 
-  // "Register" and "Login" buttons
   document.getElementById("submit-register").addEventListener("click", registerUser);
   document.getElementById("submit-login").addEventListener("click", loginUser);
-
-  // Logout button
   document.getElementById("logout-btn").addEventListener("click", logoutUser);
 
-  // Change object type in the create-object modal
   document.getElementById("object-type").addEventListener("change", onObjectTypeChange);
-
-  // "Create object" button
   document.getElementById("create-object-confirm").addEventListener("click", createObject);
 
-  // Organizer cell modal
   document.getElementById("cell-quantity-minus").addEventListener("click", () => changeCellQuantity(-1));
   document.getElementById("cell-quantity-plus").addEventListener("click", () => changeCellQuantity(1));
   document.getElementById("cell-save-btn").addEventListener("click", saveCellChanges);
 
-  // Table modal
   document.getElementById("edit-table-save-btn").addEventListener("click", saveTableChanges);
   document.getElementById("edit-table-cancel-btn").addEventListener("click", () => {
     document.getElementById("table-modal").classList.add("hidden");
   });
 
-  // Export log button
+  // Edit Object modal (new)
+  document.getElementById("edit-object-save-btn").addEventListener("click", saveEditedObject);
+
   document.getElementById("export-log-btn").addEventListener("click", exportLog);
 
-  // Render objects if any were already created
   renderObjects();
 });

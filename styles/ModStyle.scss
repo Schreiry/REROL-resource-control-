@@ -1,0 +1,335 @@
+// ==================== Variables ====================
+$primary-color: #4285f4;
+$secondary-color: #34a853;
+$danger-color: #d93025;
+$warning-color: #fbbc05;
+$shadow-color: rgba(0,0,0,0.2);
+$bg-color: #f8f9fa;
+$card-bg: #fff;
+$text-color: #202124;
+$transition-time: 0.3s;
+
+// ==================== Mixins ====================
+@mixin floating-card {
+  box-shadow: 0 1px 3px $shadow-color;
+  transition: transform $transition-time, box-shadow $transition-time;
+
+  &:hover {
+    box-shadow: 0 8px 16px $shadow-color;
+    transform: translateY(-4px);
+  }
+}
+
+// ==================== Reset / Base ====================
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+    font-family: "Press Start 2P", system-ui;
+    font-weight: 400;
+    font-style: normal;
+    font-family: "Noto Serif Georgian", serif;
+
+  background: $bg-color;
+  color: $text-color;
+}
+
+// .jacquard-12-regular {
+//     font-family: "Jacquard 12", system-ui;
+//     font-weight: 400;
+//     font-style: normal;
+//   }
+  
+
+// ==================== Header ====================
+// header {
+//   background: #fff;
+//   border-bottom: 1px solid #ddd;
+//   .header-container {
+//     display: flex;
+//     align-items: center;
+//     justify-content: space-between;
+//     padding: 10px 20px;
+//   }
+//   .header-menu a {
+//     margin-right: 20px;
+//     text-decoration: none;
+//     color: $primary-color;
+//     font-weight: 500;
+//     &:hover {
+//       text-decoration: underline;
+//     }
+//   }
+//   .header-logo img {
+//     max-height: 40px;
+//   }
+//   .header-actions {
+//     #export-log-section {
+//       .export-log-button {
+//         background: $warning-color;
+//         color: #000;
+//         border: none;
+//         border-radius: 4px;
+//         padding: 10px 24px;
+//         font-size: 1rem;
+//         cursor: pointer;
+//         transition: background 0.2s, transform 0.2s;
+//         &:hover {
+//           background: darken($warning-color, 10%);
+//           transform: translateY(-1px);
+//         }
+//       }
+//     }
+//   }
+// }
+
+// ==================== Auth section ====================
+#auth-section {
+  margin: 40px auto;
+  text-align: center;
+
+  .big-button {
+    background: $primary-color;
+    color: #fff;
+    font-size: 1rem;
+    padding: 12px 24px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin: 0 10px;
+    transition: background 0.3s, transform 0.3s;
+    &:hover {
+      background: darken($primary-color, 10%);
+      transform: translateY(-1px);
+    }
+  }
+}
+
+// ==================== Modals ====================
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.5);
+  z-index: 999;
+  overflow-y: auto;
+
+  &.hidden {
+    display: none;
+  }
+
+  .modal-content {
+    background: #fff;
+    margin: 5% auto;
+    padding: 20px;
+    width: 400px;
+    position: relative;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+
+    .close {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      cursor: pointer;
+      font-size: 20px;
+      color: #555;
+    }
+
+    label {
+      display: block;
+      margin: 15px 0 5px;
+      font-weight: 500;
+      color: #3c4043;
+    }
+    input, select {
+      width: 100%;
+      padding: 8px;
+      margin-bottom: 10px;
+      font-size: 1rem;
+      border: 1px solid #dadce0;
+      border-radius: 4px;
+    }
+    button {
+      background: $primary-color;
+      color: #fff;
+      padding: 10px 16px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 1rem;
+      transition: background 0.3s;
+      &:hover {
+        background: darken($primary-color, 10%);
+      }
+    }
+  }
+}
+
+// ==================== Main content ====================
+#main-content {
+  max-width: 1200px;
+  margin: 20px auto;
+  padding: 0 20px;
+
+  .user-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+
+    .logout-button {
+      background: $danger-color;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      padding: 8px 16px;
+      cursor: pointer;
+      transition: background 0.3s, transform 0.2s;
+      &:hover {
+        background: darken($danger-color, 10%);
+        transform: translateY(-1px);
+      }
+    }
+  }
+
+  .add-object-button {
+    background: $secondary-color;
+    color: #fff;
+    border-radius: 4px;
+    padding: 10px 24px;
+    margin-bottom: 20px;
+    font-size: 1rem;
+    border: none;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.2s;
+    &:hover {
+      background: darken($secondary-color, 10%);
+      transform: translateY(-1px);
+    }
+  }
+}
+
+// ==================== Objects container ====================
+#objects-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: flex-start;
+  align-items: flex-start;
+}
+
+// ==================== Object cards ====================
+.object-card {
+  width: 220px;
+  border-radius: 8px;
+  background: $card-bg;
+  padding: 16px;
+  cursor: pointer;
+  @include floating-card; /* Используем наш миксин для "парящего" эффекта */
+
+  .object-title {
+    font-weight: 600;
+    margin-bottom: 10px;
+    font-size: 1rem;
+    color: $text-color;
+  }
+
+  /* Little progress bar for box fill */
+  .box-fill-bar {
+    width: 100%;
+    height: 8px;
+    background-color: #dadce0;
+    border-radius: 4px;
+    overflow: hidden;
+    margin-bottom: 8px;
+
+    .box-fill-bar-inner {
+      height: 100%;
+      background-color: $primary-color;
+      transition: width 0.3s;
+    }
+  }
+
+  /* Organizer cells */
+  .organizer-cells {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+
+    .organizer-cell {
+      width: 32px;
+      height: 32px;
+      background-color: #eee;
+      border-radius: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      cursor: pointer;
+      &.active {
+        animation: shake 0.3s;
+        box-shadow: 0 0 6px rgba(255,230,0,0.8);
+      }
+    }
+  }
+
+  /* Buttons (edit/duplicate/delete) */
+  .object-actions {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    display: none;
+
+    button {
+      margin-left: 5px;
+      cursor: pointer;
+      padding: 5px 8px;
+      font-size: 12px;
+      border: none;
+      border-radius: 4px;
+      background: #f1f3f4;
+      color: #202124;
+      transition: background 0.2s;
+      &:hover {
+        background: #dadce0;
+      }
+    }
+  }
+
+  &:hover {
+    .object-actions {
+      display: block;
+    }
+  }
+}
+
+// Organizer cell "shake" animation
+@keyframes shake {
+  0% { transform: translate(0, 0); }
+  20% { transform: translate(-2px, 0); }
+  40% { transform: translate(2px, 0); }
+  60% { transform: translate(-2px, 0); }
+  80% { transform: translate(2px, 0); }
+  100% { transform: translate(0, 0); }
+}
+
+// ==================== Trash can ====================
+#trash-can {
+  position: fixed;
+  bottom: 20px;
+  left: 20px;
+  width: 50px;
+  height: 50px;
+  z-index: 1000;
+
+  img {
+    width: 100%;
+    height: auto;
+  }
+}

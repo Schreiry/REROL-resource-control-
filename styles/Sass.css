@@ -1,0 +1,256 @@
+@charset "UTF-8";
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Press Start 2P", system-ui;
+  font-weight: 400;
+  font-style: normal;
+  font-family: "Noto Serif Georgian", serif;
+  background: #f8f9fa;
+  color: #202124;
+}
+
+#auth-section {
+  margin: 40px auto;
+  text-align: center;
+}
+#auth-section .big-button {
+  background: #4285f4;
+  color: #fff;
+  font-size: 1rem;
+  padding: 12px 24px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  margin: 0 10px;
+  transition: background 0.3s, transform 0.3s;
+}
+#auth-section .big-button:hover {
+  background: rgb(17.805, 101.89, 241.195);
+  transform: translateY(-1px);
+}
+
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 999;
+  overflow-y: auto;
+}
+.modal.hidden {
+  display: none;
+}
+.modal .modal-content {
+  background: #fff;
+  margin: 5% auto;
+  padding: 20px;
+  width: 400px;
+  position: relative;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+.modal .modal-content .close {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  cursor: pointer;
+  font-size: 20px;
+  color: #555;
+}
+.modal .modal-content label {
+  display: block;
+  margin: 15px 0 5px;
+  font-weight: 500;
+  color: #3c4043;
+}
+.modal .modal-content input, .modal .modal-content select {
+  width: 100%;
+  padding: 8px;
+  margin-bottom: 10px;
+  font-size: 1rem;
+  border: 1px solid #dadce0;
+  border-radius: 4px;
+}
+.modal .modal-content button {
+  background: #4285f4;
+  color: #fff;
+  padding: 10px 16px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background 0.3s;
+}
+.modal .modal-content button:hover {
+  background: rgb(17.805, 101.89, 241.195);
+}
+
+#main-content {
+  max-width: 1200px;
+  margin: 20px auto;
+  padding: 0 20px;
+}
+#main-content .user-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+#main-content .user-info .logout-button {
+  background: #d93025;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  padding: 8px 16px;
+  cursor: pointer;
+  transition: background 0.3s, transform 0.2s;
+}
+#main-content .user-info .logout-button:hover {
+  background: rgb(173.4291338583, 38.3622047244, 29.5708661417);
+  transform: translateY(-1px);
+}
+#main-content .add-object-button {
+  background: #34a853;
+  color: #fff;
+  border-radius: 4px;
+  padding: 10px 24px;
+  margin-bottom: 20px;
+  font-size: 1rem;
+  border: none;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.2s;
+}
+#main-content .add-object-button:hover {
+  background: rgb(39.9454545455, 129.0545454545, 63.7590909091);
+  transform: translateY(-1px);
+}
+
+#objects-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: flex-start;
+  align-items: flex-start;
+}
+
+.object-card {
+  width: 220px;
+  border-radius: 8px;
+  background: #fff;
+  padding: 16px;
+  cursor: pointer;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+  transition: transform 0.3s, box-shadow 0.3s;
+  /* Используем наш миксин для "парящего" эффекта */
+  /* Little progress bar for box fill */
+  /* Organizer cells */
+  /* Buttons (edit/duplicate/delete) */
+}
+.object-card:hover {
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  transform: translateY(-4px);
+}
+.object-card .object-title {
+  font-weight: 600;
+  margin-bottom: 10px;
+  font-size: 1rem;
+  color: #202124;
+}
+.object-card .box-fill-bar {
+  width: 100%;
+  height: 8px;
+  background-color: #dadce0;
+  border-radius: 4px;
+  overflow: hidden;
+  margin-bottom: 8px;
+}
+.object-card .box-fill-bar .box-fill-bar-inner {
+  height: 100%;
+  background-color: #4285f4;
+  transition: width 0.3s;
+}
+.object-card .organizer-cells {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+}
+.object-card .organizer-cells .organizer-cell {
+  width: 32px;
+  height: 32px;
+  background-color: #eee;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  cursor: pointer;
+}
+.object-card .organizer-cells .organizer-cell.active {
+  animation: shake 0.3s;
+  box-shadow: 0 0 6px rgba(255, 230, 0, 0.8);
+}
+.object-card .object-actions {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  display: none;
+}
+.object-card .object-actions button {
+  margin-left: 5px;
+  cursor: pointer;
+  padding: 5px 8px;
+  font-size: 12px;
+  border: none;
+  border-radius: 4px;
+  background: #f1f3f4;
+  color: #202124;
+  transition: background 0.2s;
+}
+.object-card .object-actions button:hover {
+  background: #dadce0;
+}
+.object-card:hover .object-actions {
+  display: block;
+}
+
+@keyframes shake {
+  0% {
+    transform: translate(0, 0);
+  }
+  20% {
+    transform: translate(-2px, 0);
+  }
+  40% {
+    transform: translate(2px, 0);
+  }
+  60% {
+    transform: translate(-2px, 0);
+  }
+  80% {
+    transform: translate(2px, 0);
+  }
+  100% {
+    transform: translate(0, 0);
+  }
+}
+#trash-can {
+  position: fixed;
+  bottom: 20px;
+  left: 20px;
+  width: 50px;
+  height: 50px;
+  z-index: 1000;
+}
+#trash-can img {
+  width: 100%;
+  height: auto;
+}
+
+/*# sourceMappingURL=Sass.css.map */
