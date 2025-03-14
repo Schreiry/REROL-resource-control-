@@ -27,152 +27,275 @@
  * Get the array of existing objects from localStorage
  */
 function getObjectsFromStorage() {
-    const str = localStorage.getItem("objects");
-    if (str) {
-      return JSON.parse(str);
-    }
-    return [];
+  const str = localStorage.getItem("objects");
+  if (str) {
+    return JSON.parse(str);
   }
-  
-  /**
-   * Save the array of objects to localStorage
-   */
-  function setObjectsToStorage(objs) {
-    localStorage.setItem("objects", JSON.stringify(objs));
-  }
-  
-  /**
-   * Generate a unique ID (timestamp-based)
-   */
-  function generateId() {
-    return Date.now();
-  }
-  
-  /*******************************************************
-   * Main logic for the "Products Table"
-   *******************************************************/
-  
-  /**
-   * We'll keep an in-memory array of rows, e.g.:
-   * [
-   *   { productName: "", cellIndex: "", organizerName: "", boxName: "", quantity: "" },
-   *   ...
-   * ]
-   *
-   * But for minimal example, we can just handle everything directly in the DOM.
-   */
-  
-  document.addEventListener("DOMContentLoaded", () => {
-    const tableBody = document.querySelector("#products-table tbody");
-    const addRowBtn = document.getElementById("add-row-btn");
-  
-    addRowBtn.addEventListener("click", () => {
-      addNewRow(tableBody);
-    });
+  return [];
+}
+
+/**
+ * Save the array of objects to localStorage
+ */
+function setObjectsToStorage(objs) {
+  localStorage.setItem("objects", JSON.stringify(objs));
+}
+
+/**
+ * Generate a unique ID (timestamp-based)
+ */
+function generateId() {
+  return Date.now();
+}
+
+/*******************************************************
+ * Main logic for the "Products Table"
+ *******************************************************/
+
+/**
+ * We'll keep an in-memory array of rows, e.g.:
+ * [
+ *   { productName: "", cellIndex: "", organizerName: "", boxName: "", quantity: "" },
+ *   ...
+ * ]
+ *
+ * But for minimal example, we can just handle everything directly in the DOM.
+ */
+
+document.addEventListener("DOMContentLoaded", () => {
+  const tableBody = document.querySelector("#products-table tbody");
+  const addRowBtn = document.getElementById("add-row-btn");
+
+  addRowBtn.addEventListener("click", () => {
+    addNewRow(tableBody);
   });
-  
-  /**
-   * Add a new row to the table
-   */
-  function addNewRow(tbody) {
-    // Create a <tr>
-    const tr = document.createElement("tr");
-  
-    // We'll have 5 columns => 5 inputs
-    const columns = ["productName", "cellIndex", "organizerName", "boxName", "quantity"];
-    columns.forEach((col) => {
-      const td = document.createElement("td");
-      const input = document.createElement("input");
-      input.type = (col === "quantity" || col === "cellIndex") ? "number" : "text";
-      input.min = "0"; // for quantity or cellIndex
-  
-      // When the user changes a cell, we sync to localStorage
-      input.addEventListener("change", () => {
-        syncRowToObjects(tr);
-      });
-  
-      td.appendChild(input);
-      tr.appendChild(td);
-    });
-  
+
+  // Load existing objects and display them in the table
+  loadObjectsToTable(tableBody);
+});
+
+function loadObjectsToTable(tbody) {
+  const objects = getObjectsFromStorage();
+
+  objects.forEach(obj => {
+    const tr = createTableRow(obj);
     tbody.appendChild(tr);
+  });
+}
+
+function createTableRow(obj) {
+  const tr = document.createElement("tr");
+
+  const productNameTd = document.createElement("td");
+  productNameTd.textContent = obj.purpose || obj.tableNumber || "Unknown";
+  tr.appendChild(productNameTd);
+
+  const cellIndexTd = document.createElement("td");
+  cellIndexTd.textContent = obj.cells ? obj.cells.length : "";
+  tr.appendChild(cellIndexTd);
+
+  const quantityTd = document.createElement("td");
+  quantityTd.textContent = obj.items || obj.boxCount || obj.organizerCount || 0;
+  tr.appendChild(quantityTd);
+
+  const colorTd = document.createElement("td");
+  colorTd.style.backgroundColor = obj.color || "#ffffff";
+  tr.appendChild(colorTd);
+
+  const typeTd = document.createElement("td");
+  const typeIndicator = document.createElement("span");
+  typeIndicator.classList.add("type-indicator");
+  if (obj.type === "organizer") {
+    typeIndicator.classList.add("organizer");
+    typeIndicator.textContent = "Organizer";
+  } else if (obj.type === "box") {
+    typeIndicator.classList.add("box");
+    typeIndicator.textContent = "Box";
   }
-  
-  /**
-   * Sync a single row to the "objects" in localStorage
-   * Called whenever user changes something in that row.
-   */
-  function syncRowToObjects(tr) {
-    // Extract values from inputs in the row
-    const tds = tr.querySelectorAll("td");
-    const productName = tds[0].querySelector("input").value.trim();
-    const cellIndexStr = tds[1].querySelector("input").value.trim();
-    const organizerName = tds[2].querySelector("input").value.trim();
-    const boxName = tds[3].querySelector("input").value.trim();
-    const quantityStr = tds[4].querySelector("input").value.trim();
-  
-    const quantity = parseInt(quantityStr, 10) || 0;
-    const cellIndex = parseInt(cellIndexStr, 10);
-  
-    // We'll update localStorage
-    let objects = getObjectsFromStorage();
-  
-    // 1) If "organizerName" is provided, let's create/find an organizer
-    if (organizerName) {
-      // Find existing organizer with the same name
-      let organizerObj = objects.find(o => o.type === "organizer" && o.purpose === organizerName);
-  
-      if (!organizerObj) {
-        // Create a new organizer
-        organizerObj = {
-          id: generateId(),
-          type: "organizer",
-          color: "#ff0000", // default color or random
-          purpose: organizerName,
-          cells: []
-        };
-        objects.push(organizerObj);
-      }
-  
-      // If user provided a cellIndex, let's put productName + quantity there
-      if (!isNaN(cellIndex)) {
-        // find or create the cell
-        let cell = organizerObj.cells.find(c => c.cellIndex === cellIndex);
-        if (!cell) {
-          cell = { cellIndex, productName: "", quantity: 0 };
-          organizerObj.cells.push(cell);
-        }
-        // update
-        cell.productName = productName;
-        cell.quantity = quantity;
-      }
-    }
-  
-    // 2) If "boxName" is provided, let's create/find a box
-    if (boxName) {
-      let boxObj = objects.find(o => o.type === "box" && o.purpose === boxName);
-      if (!boxObj) {
-        boxObj = {
-          id: generateId(),
-          type: "box",
-          color: "#ffff00", // default color
-          purpose: boxName,
-          capacity: 100,   // default capacity
-          items: 0        // or if you want an array
-        };
-        objects.push(boxObj);
-      }
-  
-      // We interpret "quantity" as how many of productName are in this box
-      // For simplicity, let's just store total items as a number
-      // Or we might do a more complex structure. We'll keep it simple:
-      boxObj.items = quantity;
-    }
-  
-    // 3) If neither "organizerName" nor "boxName" is filled, we do nothing
-    //    Or we might interpret that as "just productName alone" is stored somewhere else.
-    //    For now, let's ignore.
-  
-    setObjectsToStorage(objects);
+  typeTd.appendChild(typeIndicator);
+  tr.appendChild(typeTd);
+
+  const actionsTd = document.createElement("td");
+  actionsTd.classList.add("actions");
+
+  const editBtn = document.createElement("button");
+  editBtn.textContent = "Edit";
+  editBtn.addEventListener("click", () => editRow(tr, obj.id));
+  actionsTd.appendChild(editBtn);
+
+  const duplicateBtn = document.createElement("button");
+  duplicateBtn.textContent = "Duplicate";
+  duplicateBtn.addEventListener("click", () => duplicateRow(obj.id));
+  actionsTd.appendChild(duplicateBtn);
+
+  const deleteBtn = document.createElement("button");
+  deleteBtn.textContent = "Delete";
+  deleteBtn.addEventListener("click", () => deleteRow(tr, obj.id));
+  actionsTd.appendChild(deleteBtn);
+
+  tr.appendChild(actionsTd);
+  return tr;
+}
+
+/**
+ * Add a new row to the table
+ */
+function addNewRow(tbody) {
+  const tr = createEditableRow();
+  tbody.appendChild(tr);
+}
+
+function createEditableRow(obj = {}) {
+  const tr = document.createElement("tr");
+
+  const columns = ["productName", "cellIndex", "quantity", "color"];
+  columns.forEach((col) => {
+    const td = document.createElement("td");
+    const input = document.createElement(col === "color" ? "input" : "input");
+    input.type = (col === "quantity" || col === "cellIndex") ? "number" : (col === "color" ? "color" : "text");
+    input.min = "0";
+    input.value = obj[col] || (col === "color" ? "#ffffff" : ""); // Заполнение поля текущим значением
+
+    input.addEventListener("change", () => {
+      syncRowToObjects(tr);
+    });
+
+    td.appendChild(input);
+    tr.appendChild(td);
+  });
+
+  const typeTd = document.createElement("td");
+  const typeIndicator = document.createElement("span");
+  typeIndicator.classList.add("type-indicator");
+  if (obj.type === "organizer") {
+    typeIndicator.classList.add("organizer");
+    typeIndicator.textContent = "Organizer";
+  } else if (obj.type === "box") {
+    typeIndicator.classList.add("box");
+    typeIndicator.textContent = "Box";
   }
-  
+  typeTd.appendChild(typeIndicator);
+  tr.appendChild(typeTd);
+
+  const actionsTd = document.createElement("td");
+  actionsTd.classList.add("actions");
+
+  const saveBtn = document.createElement("button");
+  saveBtn.textContent = "Save";
+  saveBtn.addEventListener("click", () => saveRow(tr, obj.id));
+  actionsTd.appendChild(saveBtn);
+
+  const cancelBtn = document.createElement("button");
+  cancelBtn.textContent = "Cancel";
+  cancelBtn.addEventListener("click", () => cancelEdit(tr, obj));
+  actionsTd.appendChild(cancelBtn);
+
+  tr.appendChild(actionsTd);
+  return tr;
+}
+
+function editRow(tr, id) {
+  const obj = getObjectsFromStorage().find(o => o.id === id);
+  const newTr = createEditableRow({
+    productName: obj.purpose || obj.tableNumber || "",
+    cellIndex: obj.cells ? obj.cells.length : "",
+    quantity: obj.items || obj.boxCount || obj.organizerCount || 0,
+    color: obj.color || "#ffffff",
+    type: obj.type
+  });
+  tr.replaceWith(newTr);
+}
+
+function saveRow(tr, id) {
+  const tds = tr.querySelectorAll("td");
+  const productName = tds[0].querySelector("input").value.trim();
+  const cellIndexStr = tds[1].querySelector("input").value.trim();
+  const quantityStr = tds[2].querySelector("input").value.trim();
+  const color = tds[3].querySelector("input").value;
+
+  const quantity = parseInt(quantityStr, 10) || 0;
+  const cellIndex = parseInt(cellIndexStr, 10);
+
+  let objects = getObjectsFromStorage();
+
+  let obj = objects.find(o => o.id === id);
+  if (!obj) {
+    obj = { id: generateId(), type: "", purpose: "", cells: [], items: 0, color: "#ffffff" };
+    objects.push(obj);
+  }
+
+  obj.purpose = productName;
+  obj.items = quantity;
+  obj.color = color;
+
+  if (!isNaN(cellIndex) && cellIndex > 0) {
+    obj.type = "organizer";
+    obj.cells = Array.from({ length: cellIndex }, (_, i) => ({ cellIndex: i + 1, productName: "", quantity: 0 }));
+  } else {
+    obj.type = "box";
+    obj.cells = [];
+  }
+
+  setObjectsToStorage(objects);
+  location.reload();
+}
+
+function cancelEdit(tr, obj) {
+  const newTr = createTableRow(obj);
+  tr.replaceWith(newTr);
+}
+
+function duplicateRow(id) {
+  const objects = getObjectsFromStorage();
+  const obj = objects.find(o => o.id === id);
+  if (!obj) return;
+
+  const newObj = { ...obj, id: generateId() };
+  objects.push(newObj);
+  setObjectsToStorage(objects);
+  location.reload();
+}
+
+function deleteRow(tr, id) {
+  tr.remove();
+  let objects = getObjectsFromStorage();
+  objects = objects.filter(o => o.id !== id);
+  setObjectsToStorage(objects);
+}
+
+/**
+ * Sync a single row to the "objects" in localStorage
+ * Called whenever user changes something in that row.
+ */
+function syncRowToObjects(tr) {
+  const tds = tr.querySelectorAll("td");
+  const productName = tds[0].querySelector("input").value.trim();
+  const cellIndexStr = tds[1].querySelector("input").value.trim();
+  const quantityStr = tds[2].querySelector("input").value.trim();
+  const color = tds[3].querySelector("input").value;
+
+  const quantity = parseInt(quantityStr, 10) || 0;
+  const cellIndex = parseInt(cellIndexStr, 10);
+
+  let objects = getObjectsFromStorage();
+
+  let obj = objects.find(o => o.id === tr.dataset.id);
+  if (!obj) {
+    obj = { id: generateId(), type: "", purpose: "", cells: [], items: 0, color: "#ffffff" };
+    objects.push(obj);
+  }
+
+  obj.purpose = productName;
+  obj.items = quantity;
+  obj.color = color;
+
+  if (!isNaN(cellIndex) && cellIndex > 0) {
+    obj.type = "organizer";
+    obj.cells = Array.from({ length: cellIndex }, (_, i) => ({ cellIndex: i + 1, productName: "", quantity: 0 }));
+  } else {
+    obj.type = "box";
+    obj.cells = [];
+  }
+
+  setObjectsToStorage(objects);
+}

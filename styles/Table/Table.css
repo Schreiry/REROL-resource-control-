@@ -77,15 +77,55 @@
   }
   
   /* Inputs inside the table cells */
-  td input {
+  td input, td select {
     width: 100%;
     padding: 6px;
     border: 1px solid #dadce0;
     border-radius: 4px;
     font-size: 0.9rem;
   }
-  td input:focus {
+  td input:focus, td select:focus {
     outline: none;
     border-color: #4285f4;
   }
+
+  /* Actions column */
+  .actions {
+    display: none;
+    gap: 5px;
+  }
   
+  tbody tr:hover .actions {
+    display: flex;
+  }
+
+  .actions button {
+    background: #4285f4;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    padding: 5px 10px;
+    cursor: pointer;
+    transition: background 0.3s;
+  }
+  
+  .actions button:hover {
+    background: #3073dc;
+  }
+
+  /* Type indicator */
+  .type-indicator {
+    display: inline-block;
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-size: 0.8rem;
+    color: #fff;
+  }
+  
+  .type-indicator.organizer {
+    background-color: #ff9800;
+  }
+  
+  .type-indicator.box {
+    background-color: #4caf50;
+  }
