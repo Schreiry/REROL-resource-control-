@@ -36,12 +36,14 @@ header {
     border-bottom: 1px solid #ddd;
     border: none;
     position: relative;
+    transition: all 0.5s ease-in-out;
   }
   
   .header-menu {
-    text-decoration: none;
-    display: flex;
-    gap: 20px;
+    opacity: 0;
+    transform: translateY(-20px);
+    transition: all 0.5s ease-in-out;
+  
   }
   
   .header-menu a {
@@ -51,6 +53,18 @@ header {
     margin: 20px;
     transition: color 0.3s;
   }
+  .header-logo.initial-size img {
+    height: 240px;
+    transition: all 0.5s ease-in-out;
+  }
+  /* Адаптация хедера после входа */
+.logged-in-header {
+  padding: 10px 20px;
+}
+.logged-in-header .header-container {
+  justify-content: flex-start;
+}
+
   
   .header-menu a:hover {
     color: #4285f4;

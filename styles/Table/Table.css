@@ -19,7 +19,16 @@
     font-size: 1.2rem;
     font-weight: 500;
   }
-  
+  .header-logo{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .img img{
+    height: 200px;
+    width: 300px;
+  }
+
   /* Main container for the table */
   .table-container {
     max-width: 1200px;

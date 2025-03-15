@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" href="../media/R.png" type="image/x-icon">
+    <link rel="icon" href="../media/RR2.png" type="image/x-icon">
+
     <link rel="apple-touch-icon" sizes="180x180" href="../images/apple-touch-icon.png">
 
     <title>ReRol</title>
@@ -30,24 +31,22 @@
 
     <!-- ====================================================== -->
 
-    <header>
-      <div class="header-container">
-        <nav class="header-menu">
-          <!-- Ссылка на страницу с таблицами (если нужна) -->
-          <a href="./Table.html">Table</a>
-          <a href="#about">Common info</a>
-        </nav>
-        <div class="header-logo">
-          <img src="../media/ReRol1.png" alt="Logo" />
-        </div>
-        <div class="header-actions">
-          <!-- Export log button (скрыт, пока не залогинены) -->
-          <div id="export-log-section" class="hidden">
-            <button id="export-log-btn" class="export-log-button">Export log</button>
-          </div>
-        </div>
+<header>
+  <div class="header-container">
+    <nav class="header-menu hidden"> <!-- Добавлен класс hidden -->
+      <a href="./Table.html">Table</a>
+      <a href="#about">Common info</a>
+    </nav>
+    <div class="header-logo initial-size"> <!-- Добавлен класс initial-size -->
+      <img src="../media/Rerol2.png" alt="Logo" />
+    </div>
+    <div class="header-actions">
+      <div id="export-log-section" class="hidden">
+        <button id="export-log-btn" class="export-log-button">Export log</button>
       </div>
-    </header>
+    </div>
+  </div>
+</header>
     
     <!-- Registration / Login section -->
     <div id="auth-section">
@@ -283,7 +282,7 @@
     </div>
 
 <!-- Main script -->
-<script src="script.js"></script>
+<script src=".."></script>
 
 </body>
 </html>

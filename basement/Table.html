@@ -1,19 +1,29 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Products Table</title>
+  <link rel="icon" href="../media/RR2.png" type="image/x-icon">
+  <!-- Подключаем ваш стилизованный Table.css -->
   <link rel="stylesheet" href="../styles/Table/Table.css" />
+  
 </head>
 <body>
 
 <header>
-  <h1>Products Table</h1>
+  <div class="header-menu">
+    <a href="../basement/index.html">Main Page (example)</a>
+  </div>
+  <div class="header-logo">
+    <img class="img" src="../media/Rerol2.png" alt="Logo" />
+  </div>
 </header>
 
 <main>
-  <!-- Container for the table and the "Add Row" button -->
   <div class="table-container">
+    <h2>Products Table</h2>
+    <!-- Кнопка "Add Row" для добавления новой строки -->
     <button id="add-row-btn" class="primary-button">Add Row</button>
 
     <table id="products-table">
@@ -28,12 +38,14 @@
         </tr>
       </thead>
       <tbody>
-        <!-- Rows will be added dynamically -->
+        <!-- Динамические строки -->
       </tbody>
     </table>
   </div>
 </main>
 
+<!-- Скрипт с логикой работы таблицы -->
 <script src="../scripts/Table/MainTable.js"></script>
+
 </body>
 </html>
