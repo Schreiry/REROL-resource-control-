@@ -1,181 +1,258 @@
-/* ============ Reset some defaults ============ */
+/* Reset some defaults */
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-  }
-  
-  /* Body background, Google-like font, etc. */
-  body {
-    font-family: 'Roboto', sans-serif;
-    background: #f8f9fa;
-    color: #202124;
-  }
-  
-  header {
-    background: #fff;
-    border-bottom: 1px solid #ddd;
-    padding: 10px 20px;
-    font-size: 1.2rem;
-    font-weight: 500;
-  }
-  .header-logo{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-  .img img{
-    height: 200px;
-    width: 300px;
-  }
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Bungee Inline', sans-serif;
+}
 
-  /* Main container for the table */
-  .table-container {
-    max-width: 1200px;
-    margin: 20px auto;
-    padding: 0 20px;
-  }
-  
-  /* "Add Row" button */
-  .primary-button,.addrow {
-    background: #4285f4;
-    color: #fff;
-    padding: 8px 16px;
-    border-radius: 4px;
-    border: none;
-    font-size: 1rem;
-    cursor: pointer;
-    margin-bottom: 10px;
-    transition: background 0.3s, transform 0.2s;
-  }
-  .addrow {
-    visibility: visible;
-  }
-  
-  .primary-button:hover {
-    background: #3073dc;
-    transform: translateY(-1px);
-  }
-  
-  /* Table styling */
-  table {
-    width: 100%;
-    border-collapse: collapse;
-    background: #fff;
-    box-shadow: 0 1px 3px rgba(60,64,67,0.2);
-    border-radius: 4px;
-    overflow: hidden; /* if we want rounded corners */
-  }
-  /* ============ TABLE STYLING ============ */
-    /* ========= Table head ========= */
-  .col1, .col2 {
+/* Body background with a beautiful gradient */
+body {
+  font-family: 'Roboto', sans-serif;
+  background: linear-gradient(135deg, #29323c, #232526, #485563, #77797b);
+  background-size: 600% 600%;
+  animation: gradientAnimation 15s ease infinite;
+  color: #e3e3e3;
+}
 
-    background-image: linear-gradient(
-      90deg,
-      hsl(240deg 20% 32%) 0%,
-      hsl(241deg 18% 29%) 1%,
-      hsl(242deg 16% 25%) 3%,
-      hsl(242deg 14% 22%) 7%,
-      hsl(243deg 10% 19%) 13%,
-      hsl(244deg 6% 16%) 26%,
-      hsl(0deg 0% 13%) 51%,
-      hsl(244deg 6% 16%) 75%,
-      hsl(243deg 10% 19%) 87%,
-      hsl(242deg 14% 22%) 93%,
-      hsl(242deg 16% 25%) 97%,
-      hsl(241deg 18% 29%) 99%,
-      hsl(240deg 20% 32%) 100%
-    );
-    color: #ddd; 
-  }
-  .col1 {
-    border-right: #d4d2c7 1px solid;
-  }
+@keyframes gradientAnimation {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
 
-  /* ========= Table head ========= */
-  td {
-    color: #161616; 
-    margin: 1px;
-    background-color:#ddd;
-  }
-  table {
-    color: #636262 !important; 
+/* Header styling */
+header {
+  background: rgba(255, 255, 255, 0.1);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  padding: 10px 20px;
+  font-size: 1.2rem;
+  font-weight: 500;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: background 0.3s, box-shadow 0.3s;
+}
 
-  }
+header:hover {
+  background: rgba(195, 195, 195, 0.2);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
 
-  
-  thead {
-    background: #f1f3f4;
-  }
-  thead th {
-    text-align: left;
-    padding: 10px;
-    font-weight: 500;
-    font-size: 0.9rem;
-    border-bottom: 1px solid #ddd;
-  }
-  
-  tbody tr {
-    border-bottom: 1px solid #eee;
-  }
-  
-  
-  td {
-    padding: 8px 10px;
-  }
-  
-  /* Inputs inside the table cells */
-  td input, td select {
-    width: 100%;
-    padding: 6px;
-    border: 1px solid #dadce0;
-    border-radius: 4px;
-    font-size: 0.9rem;
-  }
-  td input:focus, td select:focus {
-    outline: none;
-    border-color: #4285f4;
-  }
+.header-logo {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 
-  /* Actions column */
-  .actions {
-    gap: 5px;
-  }
-  button {
-    visibility: hidden;
-  }
-  
-  tbody :hover button {
-    visibility: visible;
-  }
+.header-logo img {
+  height: 100px;
+  width: auto;
+  margin: 10px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
 
-  .actions button {
-    background: #4285f4;
-    color: #fff;
-    border: none;
-    border-radius: 4px;
-    padding: 5px 10px;
-    cursor: pointer;
-    transition: background 0.3s;
-  }
-  
-  .actions button:hover {
-    background: #3073dc;
-  }
+/* Main container for the table */
+.table-container {
+  max-width: 75%;
+  margin: 20px auto;
+  margin-top: 50px;
+  padding: 20px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: background 0.3s, box-shadow 0.3s;
+}
 
-  /* Type indicator */
-  .type-indicator {
-    display: inline-block;
-    padding: 2px 6px;
-    border-radius: 4px;
-    font-size: 0.8rem;
-    color: #fff;
-  }
+.table {
+  margin-bottom: 50px;
+}
+
+.table-container:hover {
+  background: rgba(136, 136, 136, 0.293);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+/* "Add Row" button */
+.primary-button, .addrow {
+  background: rgba(255, 255, 255, 0.1);
+  color: #fff;
+  padding: 12px 24px;
+  border-radius: 8px;
+  border: none;
+  font-size: 1rem;
+  cursor: pointer;
+  margin-bottom: 20px;
+  transition: background 0.3s, transform 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+/* material-icons {
+  font-size: 1.2rem;
+  margin-right: 10px;
+} */
+.product-txt{
+  text-align: center;
+  font-size: 2.2rem;
+  font-weight: 500;
+  justify-content: center;
+}
+.addrow {
+  visibility: visible;
+}
+
+.primary-button:hover {
+  background: rgba(48, 115, 220, 0.8);
+  transform: translateY(-1px);
+}
+
+/* Table styling */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  background: rgba(255, 255, 255, 0.1);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  overflow: hidden; /* if we want rounded corners */
+  transition: background 0.3s, box-shadow 0.3s;
+}
+
+table:hover {
+  background: rgba(255, 255, 255, 0.2);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+/* Table head styling */
+thead {
+  background: rgba(240, 240, 240, 0.1);
+}
+
+thead th {
+  text-align: left;
+  padding: 15px;
+  font-weight: 500;
+  font-size: 1rem;
+  border-bottom: 1px solid #ddd;
+}
+
+/* Table body styling */
+tbody tr {
+  border-bottom: 1px solid #eee;
+  position: relative;
+  transition: background-color 0.3s, box-shadow 0.3s; /* Add transition for hover effect */
+}
+
+tbody tr:hover {
+  background-color: rgba(0, 0, 0, 0.1); /* Slightly darker background on hover */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Add shadow for volume effect */
+}
+
+td {
+  padding: 12px 15px;
+  background: rgba(255, 255, 255, 0.1);
+}
+
+/* Inputs inside the table cells */
+td input, td select {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #dadce0;
+  border-radius: 4px;
+  font-size: 1rem;
+}
+
+td input:focus, td select:focus {
+  outline: none;
+  border-color: rgba(66, 133, 244, 0.8);
+}
+
+/* Actions column */
+.actions {
   
-  .type-indicator.organizer {
-    background-color: #ff9800;
-  }
-  
-  .type-indicator.box {
-    background-color: #4caf50;
-  }
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.3s;
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: auto; /* Increase the width to accommodate buttons */
+}
+
+tbody tr:hover .actions {
+  opacity: 1;
+}
+
+.actions button {
+  background: rgba(255, 255, 255, 0.1);
+  color: #fff;
+  border: 2px solid transparent;
+  border-radius: 4px;
+  padding: 8px 12px;
+  cursor: pointer;
+  transition: background 0.3s, border-color 0.3s;
+}
+
+.actions button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.actions .edit {
+  border-color: rgba(70, 130, 180, 0.8);
+}
+
+.actions .edit:hover {
+  background: rgba(70, 130, 180, 0.2);
+}
+
+.actions .edit:active {
+  background: rgba(70, 130, 180, 0.4);
+}
+
+.actions .duplicate {
+  border-color: rgba(255, 215, 0, 0.8);
+}
+
+.actions .duplicate:hover {
+  background: rgba(255, 215, 0, 0.2);
+}
+
+.actions .duplicate:active {
+  background: rgba(255, 215, 0, 0.4);
+}
+
+.actions .delete {
+  border-color: rgba(255, 69, 0, 0.8);
+}
+
+.actions .delete:hover {
+  background: rgba(255, 69, 0, 0.2);
+}
+
+.actions .delete:active {
+  background: rgba(255, 69, 0, 0.4);
+}
+
+/* Type indicator */
+.type-indicator {
+  display: inline-block;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 0.9rem;
+  color: #fff;
+}
+
+.type-indicator.organizer {
+  background-color: rgba(255, 152, 0, 0.8);
+}
+
+.type-indicator.box {
+  background-color: rgba(76, 175, 80, 0.8);
+}

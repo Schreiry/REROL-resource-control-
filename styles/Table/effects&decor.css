@@ -1,0 +1,58 @@
+/* Smooth transitions for elements */
+* {
+  transition: all 0.3s ease;
+}
+
+/* Hover effects for buttons */
+button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Smooth fade-in effect for elements */
+.fade-in {
+  opacity: 0;
+  animation: fadeIn 1s forwards;
+}
+
+@keyframes fadeIn {
+  to {
+    opacity: 1;
+  }
+}
+
+/* Icon styling */
+.icon {
+  font-size: 24px;
+  color: #e3e3e3;
+  transition: color 0.3s;
+}
+
+.icon:hover {
+  color: #ffffff;
+}
+
+/* Responsive scaling */
+@media (max-width: 1200px) {
+  .table-container, table, td, th, button {
+    transform: scale(0.9);
+  }
+}
+
+@media (max-width: 992px) {
+  .table-container, table, td, th, button {
+    transform: scale(0.8);
+  }
+}
+
+@media (max-width: 768px) {
+  .table-container, table, td, th, button {
+    transform: scale(0.7);
+  }
+}
+
+@media (max-width: 576px) {
+  .table-container, table, td, th, button {
+    transform: scale(0.6);
+  }
+}

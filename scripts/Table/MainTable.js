@@ -171,6 +171,7 @@ function createDisplayRowFromObject(obj) {
   // Edit
   const editBtn = document.createElement("button");
   editBtn.textContent = "Edit";
+  editBtn.classList.add("edit");
   editBtn.addEventListener("click", () => {
     console.log("[Edit] row => switching to edit mode for object ID:", obj.id);
     switchToEditMode(tr);
@@ -180,6 +181,7 @@ function createDisplayRowFromObject(obj) {
   // Duplicate
   const duplicateBtn = document.createElement("button");
   duplicateBtn.textContent = "Duplicate";
+  duplicateBtn.classList.add("duplicate");
   duplicateBtn.addEventListener("click", () => {
     console.log("[Duplicate] object ID:", obj.id);
     duplicateObject(obj.id);
@@ -189,6 +191,7 @@ function createDisplayRowFromObject(obj) {
   // Delete
   const deleteBtn = document.createElement("button");
   deleteBtn.textContent = "Delete";
+  deleteBtn.classList.add("delete");
   deleteBtn.addEventListener("click", () => {
     console.log("[Delete] object ID:", obj.id);
     deleteObjectRow(tr);

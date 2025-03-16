@@ -3,28 +3,30 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Products Table</title>
+  <title>REROL - Table</title>
   <link rel="icon" href="../media/RR2.png" type="image/x-icon">
   <!-- Подключаем ваш стилизованный Table.css -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bungee+Inline&display=swap">
   <link rel="stylesheet" href="../styles/Table/Table.css" />
-  
+  <link rel="stylesheet" href="../styles/Table/effects&decor.css">
 </head>
 <body>
 
 <header>
-  <div class="header-menu">
-    <a href="../basement/index.html">Main Page (example)</a>
-  </div>
   <div class="header-logo">
-    <img class="img" src="../media/Rerol2.png" alt="Logo" />
+    <img class="img" src="../media/Rerol.png" alt="Logo" />
   </div>
 </header>
 
 <main>
-  <div class="table-container">
-    <h2>Products Table</h2>
+  <div class="table-container fade-in">
+    <h2 class="product-txt">Products Table</h2>
     <!-- Кнопка "Add Row" для добавления новой строки -->
-    <button id="add-row-btn" class="addrow">Add Row</button>
+    <button id="add-row-btn" class="addrow">
+      <span class="material-icons icon">note_add </span> Add Row
+    </button>
+
 
     <table id="products-table">
       <thead>
@@ -34,7 +36,7 @@
           <th class="col1">Quantity</th>
           <th class="col1">Color</th>
           <th class="col1">Type</th>
-          <th class="col2">Actions</th>
+          <th class="col2" style="width: 150px;">Actions</th>
         </tr>
       </thead>
       <tbody>
@@ -46,6 +48,7 @@
 
 <!-- Скрипт с логикой работы таблицы -->
 <script src="../scripts/Table/MainTable.js"></script>
+<script src="../scripts/Table/dec&ani.js"></script>
 
 </body>
 </html>
