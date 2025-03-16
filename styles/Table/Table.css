@@ -96,31 +96,7 @@
   td {
     color: #161616; 
     margin: 1px;
-    background-image: linear-gradient(
-      90deg,
-      hsl(190deg 32% 93%) 0%,
-      hsl(190deg 29% 91%) 1%,
-      hsl(190deg 28% 89%) 3%,
-      hsl(190deg 27% 87%) 5%,
-      hsl(190deg 26% 85%) 7%,
-      hsl(190deg 25% 83%) 10%,
-      hsl(190deg 25% 82%) 13%,
-      hsl(190deg 24% 80%) 16%,
-      hsl(190deg 24% 78%) 21%,
-      hsl(189deg 24% 76%) 28%,
-      hsl(189deg 24% 74%) 40%,
-      hsl(189deg 24% 74%) 60%,
-      hsl(189deg 24% 76%) 72%,
-      hsl(190deg 24% 78%) 79%,
-      hsl(190deg 24% 80%) 84%,
-      hsl(190deg 25% 82%) 88%,
-      hsl(190deg 25% 83%) 91%,
-      hsl(190deg 26% 85%) 93%,
-      hsl(190deg 27% 87%) 95%,
-      hsl(190deg 28% 89%) 97%,
-      hsl(190deg 29% 91%) 99%,
-      hsl(190deg 32% 93%) 100%
-    );
+    background-color:#ddd;
   }
   table {
     color: #636262 !important; 
