@@ -37,7 +37,7 @@
   }
   
   /* "Add Row" button */
-  .primary-button {
+  .primary-button,.addrow {
     background: #4285f4;
     color: #fff;
     padding: 8px 16px;
@@ -48,6 +48,10 @@
     margin-bottom: 10px;
     transition: background 0.3s, transform 0.2s;
   }
+  .addrow {
+    visibility: visible;
+  }
+  
   .primary-button:hover {
     background: #3073dc;
     transform: translateY(-1px);
@@ -62,6 +66,67 @@
     border-radius: 4px;
     overflow: hidden; /* if we want rounded corners */
   }
+  /* ============ TABLE STYLING ============ */
+    /* ========= Table head ========= */
+  .col1, .col2 {
+
+    background-image: linear-gradient(
+      90deg,
+      hsl(240deg 20% 32%) 0%,
+      hsl(241deg 18% 29%) 1%,
+      hsl(242deg 16% 25%) 3%,
+      hsl(242deg 14% 22%) 7%,
+      hsl(243deg 10% 19%) 13%,
+      hsl(244deg 6% 16%) 26%,
+      hsl(0deg 0% 13%) 51%,
+      hsl(244deg 6% 16%) 75%,
+      hsl(243deg 10% 19%) 87%,
+      hsl(242deg 14% 22%) 93%,
+      hsl(242deg 16% 25%) 97%,
+      hsl(241deg 18% 29%) 99%,
+      hsl(240deg 20% 32%) 100%
+    );
+    color: #ddd; 
+  }
+  .col1 {
+    border-right: #d4d2c7 1px solid;
+  }
+
+  /* ========= Table head ========= */
+  td {
+    color: #161616; 
+    margin: 1px;
+    background-image: linear-gradient(
+      90deg,
+      hsl(190deg 32% 93%) 0%,
+      hsl(190deg 29% 91%) 1%,
+      hsl(190deg 28% 89%) 3%,
+      hsl(190deg 27% 87%) 5%,
+      hsl(190deg 26% 85%) 7%,
+      hsl(190deg 25% 83%) 10%,
+      hsl(190deg 25% 82%) 13%,
+      hsl(190deg 24% 80%) 16%,
+      hsl(190deg 24% 78%) 21%,
+      hsl(189deg 24% 76%) 28%,
+      hsl(189deg 24% 74%) 40%,
+      hsl(189deg 24% 74%) 60%,
+      hsl(189deg 24% 76%) 72%,
+      hsl(190deg 24% 78%) 79%,
+      hsl(190deg 24% 80%) 84%,
+      hsl(190deg 25% 82%) 88%,
+      hsl(190deg 25% 83%) 91%,
+      hsl(190deg 26% 85%) 93%,
+      hsl(190deg 27% 87%) 95%,
+      hsl(190deg 28% 89%) 97%,
+      hsl(190deg 29% 91%) 99%,
+      hsl(190deg 32% 93%) 100%
+    );
+  }
+  table {
+    color: #636262 !important; 
+
+  }
+
   
   thead {
     background: #f1f3f4;
@@ -77,9 +142,7 @@
   tbody tr {
     border-bottom: 1px solid #eee;
   }
-  tbody tr:hover {
-    background: #fafafa;
-  }
+  
   
   td {
     padding: 8px 10px;
@@ -100,12 +163,14 @@
 
   /* Actions column */
   .actions {
-    display: none;
     gap: 5px;
   }
+  button {
+    visibility: hidden;
+  }
   
-  tbody tr:hover .actions {
-    display: flex;
+  tbody :hover button {
+    visibility: visible;
   }
 
   .actions button {

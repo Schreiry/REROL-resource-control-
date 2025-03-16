@@ -262,6 +262,12 @@ body {
   text-align: center;
 }
 
+/* ============ TABLE STYLING ============ */
+th {
+
+  background-color: rgb(255, 0, 0) !important;
+}
+
 /* ============ PROGRESS BAR (Box fill) ============ */
 .box-fill-bar {
   width: 100%;
