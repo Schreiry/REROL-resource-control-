@@ -136,6 +136,10 @@ function loginUser() {
     document.getElementById("export-log-section").classList.remove("hidden");
 
     document.getElementById("current-user").textContent = "User: " + currentUser;
+
+    // Remove the hidden class from the header menu
+    document.querySelector(".header-menu").classList.remove("hidden");
+
     closeModal("login-modal");
   } else {
     alert("Incorrect username or password!");
@@ -151,6 +155,9 @@ function logoutUser() {
   document.getElementById("auth-section").classList.remove("hidden");
   document.getElementById("main-content").classList.add("hidden");
   document.getElementById("export-log-section").classList.add("hidden");
+
+  // Add the hidden class back to the header menu
+  document.querySelector(".header-menu").classList.add("hidden");
 }
 
 /*******************************************************
@@ -208,13 +215,15 @@ function createObject() {
   }
 
   const objects = getObjectsFromStorage();
+  let newObject = null;
+
   if (type === "box") {
     const color = document.getElementById("box-color").value;
     const purpose = document.getElementById("box-purpose").value.trim();
     const capacity = parseInt(document.getElementById("box-capacity").value, 10);
     const items = parseInt(document.getElementById("box-items").value, 10);
 
-    const newBox = {
+    newObject = {
       id: Date.now(),
       type: "box",
       color,
@@ -222,9 +231,9 @@ function createObject() {
       capacity,
       items
     };
-    objects.push(newBox);
+    objects.push(newObject);
     setObjectsToStorage(objects);
-    createBlock(currentUser, "CREATE_BOX", newBox);
+    createBlock(currentUser, "CREATE_BOX", newObject);
 
   } else if (type === "organizer") {
     const purpose = document.getElementById("organizer-purpose").value.trim();
@@ -236,16 +245,16 @@ function createObject() {
       cells.push({ cellIndex: i, productName: "", quantity: 0 });
     }
 
-    const newOrganizer = {
+    newObject = {
       id: Date.now(),
       type: "organizer",
       color,
       purpose,
       cells
     };
-    objects.push(newOrganizer);
+    objects.push(newObject);
     setObjectsToStorage(objects);
-    createBlock(currentUser, "CREATE_ORGANIZER", newOrganizer);
+    createBlock(currentUser, "CREATE_ORGANIZER", newObject);
 
   } else if (type === "table") {
     const orientation = document.getElementById("table-orientation").value;
@@ -253,7 +262,7 @@ function createObject() {
     const boxCount = parseInt(document.getElementById("table-box-count").value, 10);
     const organizerCount = parseInt(document.getElementById("table-organizer-count").value, 10);
 
-    const newTable = {
+    newObject = {
       id: Date.now(),
       type: "table",
       orientation,
@@ -261,10 +270,13 @@ function createObject() {
       boxCount,
       organizerCount
     };
-    objects.push(newTable);
+    objects.push(newObject);
     setObjectsToStorage(objects);
-    createBlock(currentUser, "CREATE_TABLE", newTable);
+    createBlock(currentUser, "CREATE_TABLE", newObject);
   }
+
+  // Broadcast the new object to other tabs
+  broadcastDataUpdate(newObject);
 
   closeModal("create-object-modal");
   renderObjects();
@@ -726,3 +738,41 @@ window.addEventListener("DOMContentLoaded", () => {
 
   renderObjects();
 });
+
+/*******************************************************
+ * Broadcast Channel for data updates
+ *******************************************************/
+const channel = new BroadcastChannel('data_channel');
+
+// Listen for messages from other tabs
+channel.onmessage = (event) => {
+  const { type, data } = event.data;
+  if (type === 'update') {
+    // Handle the data update
+    updateData(data);
+  }
+};
+
+// Function to send data updates to other tabs
+function broadcastDataUpdate(data) {
+  channel.postMessage({ type: 'update', data });
+}
+
+// Function to update data on the current page
+function updateData(data) {
+  // Update your page with the new data
+  console.log('Data received from another tab:', data);
+
+  // Update local storage
+  const objects = getObjectsFromStorage();
+  const index = objects.findIndex(obj => obj.id === data.id);
+  if (index !== -1) {
+    objects[index] = data;
+  } else {
+    objects.push(data);
+  }
+  setObjectsToStorage(objects);
+
+  // Re-render objects
+  renderObjects();
+}

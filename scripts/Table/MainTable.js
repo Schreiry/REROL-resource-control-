@@ -89,6 +89,7 @@ function loadObjectsToTable(tbody) {
   const objects = getObjectsFromStorage();
   console.log("[loadObjectsToTable] Loaded objects:", objects);
 
+  tbody.innerHTML = ''; // Clear existing rows
   objects.forEach(obj => {
     const row = createDisplayRowFromObject(obj);
     tbody.appendChild(row);
@@ -392,6 +393,9 @@ function saveRowChanges(tr) {
   // Switch row to display mode
   const newDisplayRow = createDisplayRowFromObject(obj);
   tr.replaceWith(newDisplayRow);
+
+  // Broadcast the updated object to other tabs
+  broadcastDataUpdate(obj);
 }
 
 /*******************************************************
@@ -431,4 +435,121 @@ function deleteObjectRow(tr) {
   setObjectsToStorage(objects);
   console.log("[deleteObjectRow] Deleted object with ID:", id);
   tr.remove();
+
+  // Broadcast the deletion to other tabs
+  broadcastDataUpdate({ id, deleted: true });
+}
+
+/*******************************************************
+ * Broadcast Channel
+ *******************************************************/
+const channel = new BroadcastChannel('data_channel');
+
+// Listen for messages from other tabs
+channel.onmessage = (event) => {
+  const { type, data } = event.data;
+  if (type === 'update') {
+    // Handle the data update
+    updateData(data);
+  }
+};
+
+// Function to send data updates to other tabs
+function broadcastDataUpdate(data) {
+  channel.postMessage({ type: 'update', data });
+}
+
+// Function to update data on the current page
+function updateData(data) {
+  // Update your page with the new data
+  console.log('Data received from another tab:', data);
+
+  // Update local storage
+  const objects = getObjectsFromStorage();
+  const index = objects.findIndex(obj => obj.id === data.id);
+  if (index !== -1) {
+    if (data.deleted) {
+      objects.splice(index, 1);
+    } else {
+      objects[index] = data;
+    }
+  } else if (!data.deleted) {
+    objects.push(data);
+  }
+  setObjectsToStorage(objects);
+
+  // Re-render objects
+  loadObjectsToTable(document.querySelector("#products-table tbody"));
+}
+
+// Example function to create a new object and broadcast the update
+function createObject() {
+  const type = document.getElementById("object-type").value;
+  if (!type) {
+    alert("Select object type!");
+    return;
+  }
+
+  const objects = getObjectsFromStorage();
+  let newObject = null;
+
+  if (type === "box") {
+    const color = document.getElementById("box-color").value;
+    const purpose = document.getElementById("box-purpose").value.trim();
+    const capacity = parseInt(document.getElementById("box-capacity").value, 10);
+    const items = parseInt(document.getElementById("box-items").value, 10);
+
+    newObject = {
+      id: Date.now(),
+      type: "box",
+      color,
+      purpose,
+      capacity,
+      items
+    };
+    objects.push(newObject);
+    setObjectsToStorage(objects);
+
+  } else if (type === "organizer") {
+    const purpose = document.getElementById("organizer-purpose").value.trim();
+    const color = document.getElementById("organizer-color").value;
+    const cellsCount = parseInt(document.getElementById("organizer-cells").value, 10);
+
+    const cells = [];
+    for (let i = 0; i < cellsCount; i++) {
+      cells.push({ cellIndex: i, productName: "", quantity: 0 });
+    }
+
+    newObject = {
+      id: Date.now(),
+      type: "organizer",
+      color,
+      purpose,
+      cells
+    };
+    objects.push(newObject);
+    setObjectsToStorage(objects);
+
+  } else if (type === "table") {
+    const orientation = document.getElementById("table-orientation").value;
+    const tableNumber = document.getElementById("table-number").value.trim();
+    const boxCount = parseInt(document.getElementById("table-box-count").value, 10);
+    const organizerCount = parseInt(document.getElementById("table-organizer-count").value, 10);
+
+    newObject = {
+      id: Date.now(),
+      type: "table",
+      orientation,
+      tableNumber,
+      boxCount,
+      organizerCount
+    };
+    objects.push(newObject);
+    setObjectsToStorage(objects);
+  }
+
+  // Broadcast the new object to other tabs
+  broadcastDataUpdate(newObject);
+
+  loadObjectsToTable(document.querySelector("#products-table tbody"));
 }

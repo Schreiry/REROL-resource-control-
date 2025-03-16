@@ -4,17 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="../media/RR2.png" type="image/x-icon">
-
     <link rel="apple-touch-icon" sizes="180x180" href="../images/apple-touch-icon.png">
-
     <title>ReRol</title>
-
-    <!-- =-=-= =-=-= =-=-= Links =-=-= =-=-= =-=-=  -->
     <link rel="stylesheet" href="../styles/Sass.css">
     <link rel="stylesheet" href="../styles/header.css">
     <link rel="stylesheet" href="../styles/Main.Style.css">
-
-    <!-- =-=-= =-=-= =-=-= =-=-= =-=-= =-=-= =-=-=  -->
 </head>
 <body>
 
@@ -33,7 +27,7 @@
 
 <header>
   <div class="header-container">
-    <nav class="header-menu"> <!-- Добавлен класс hidden -->
+    <nav class="header-menu hidden"> <!-- Добавлен класс hidden -->
       <a href="./Table.html">Table</a>
       <a href="#about">Common info</a>
     </nav>
@@ -50,239 +44,175 @@
     
     <!-- Registration / Login section -->
     <div id="auth-section">
-      <button id="register-btn" class="big-button">Registration</button>
-      <button id="login-btn" class="big-button">Log-In</button>
+        <button id="register-btn" class="big-button">Registration</button>
+        <button id="login-btn" class="big-button">Log-In</button>
     </div>
-    
-    <!-- Modal: Registration -->
     <div id="register-modal" class="modal hidden">
-      <div class="modal-content">
-        <span class="close" data-close="register-modal">&times;</span>
-        <h2>Registration</h2>
-        <label for="reg-username">Username:</label>
-        <input type="text" id="reg-username" />
-        <label for="reg-password">Password:</label>
-        <input type="password" id="reg-password" />
-        <button id="submit-register">Register</button>
-      </div>
-    </div>
-    
-    <!-- Modal: Login -->
-    <div id="login-modal" class="modal hidden">
-      <div class="modal-content">
-        <span class="close" data-close="login-modal">&times;</span>
-        <h2>Log In</h2>
-        <label for="login-username">Username:</label>
-        <input type="text" id="login-username" />
-        <label for="login-password">Password:</label>
-        <input type="password" id="login-password" />
-        <button id="submit-login">Log-In</button>
-      </div>
-    </div>
-    
-    <!-- Main content (visible after login) -->
-    <div id="main-content" class="hidden">
-      <div class="user-info">
-        <span id="current-user"></span>
-        <button id="logout-btn" class="logout-button">Log out</button>
-      </div>
-    
-      <!-- Button: Add object -->
-      <button id="add-object-btn" class="add-object-button">Add object</button>
-    
-      <!-- Modal: Create object -->
-      <div id="create-object-modal" class="modal hidden">
         <div class="modal-content">
-          <span class="close" data-close="create-object-modal">&times;</span>
-          <h2>Create an object</h2>
-    
-          <!-- Object type selector -->
-          <label for="object-type">Object type:</label>
-          <select id="object-type">
-            <option value="">-- Select --</option>
-            <option value="box">Box</option>
-            <option value="organizer">Cellular Organizer</option>
-            <option value="table">Table</option>
-          </select>
-    
-          <!-- Parameters for Box -->
-          <div id="box-params" class="hidden">
-            <label for="box-color">Box color:</label>
-            <input type="color" id="box-color" value="#ffff00" />
-    
-            <label for="box-purpose">Purpose:</label>
-            <input type="text" id="box-purpose" placeholder="e.g. Wires box" />
-    
-            <label for="box-capacity">Box capacity (max items):</label>
-            <input type="number" id="box-capacity" value="100" min="1" />
-    
-            <label for="box-items">Items currently in the box:</label>
-            <input type="number" id="box-items" value="0" min="0" />
-          </div>
-    
-          <!-- Parameters for Organizer -->
-          <div id="organizer-params" class="hidden">
-            <label for="organizer-purpose">Purpose:</label>
-            <input type="text" id="organizer-purpose" placeholder="e.g. Screws" />
-    
-            <label for="organizer-color">Organizer color:</label>
-            <input type="color" id="organizer-color" value="#ff0000" />
-    
-            <label for="organizer-cells">Number of cells:</label>
-            <input type="number" id="organizer-cells" value="10" min="1" />
-          </div>
-    
-          <!-- Parameters for Table -->
-          <div id="table-params" class="hidden">
-            <label for="table-orientation">Orientation:</label>
-            <select id="table-orientation">
-              <option value="north">north</option>
-              <option value="south">south</option>
-              <option value="east">east</option>
-              <option value="west">west</option>
-            </select>
-    
-            <label for="table-number">Table number:</label>
-            <input type="text" id="table-number" placeholder="e.g. T-101" />
-    
-            <label for="table-box-count">Boxes on this table:</label>
-            <input type="number" id="table-box-count" value="0" min="0" />
-    
-            <label for="table-organizer-count">Organizers on this table:</label>
-            <input type="number" id="table-organizer-count" value="0" min="0" />
-          </div>
-    
-          <button id="create-object-confirm">Create</button>
+            <span class="close" data-close="register-modal">&times;</span>
+            <h2>Registration</h2>
+            <label for="reg-username">Username:</label>
+            <input type="text" id="reg-username" />
+            <label for="reg-password">Password:</label>
+            <input type="password" id="reg-password" />
+            <button id="submit-register">Register</button>
         </div>
-      </div>
-    
-      <!-- Section where the created objects (boxes, organizers, tables) will be displayed -->
-      <div id="objects-container"></div>
     </div>
-    
-    <!-- Modal: editing cells in the organizer -->
+    <div id="login-modal" class="modal hidden">
+        <div class="modal-content">
+            <span class="close" data-close="login-modal">&times;</span>
+            <h2>Log In</h2>
+            <label for="login-username">Username:</label>
+            <input type="text" id="login-username" />
+            <label for="login-password">Password:</label>
+            <input type="password" id="login-password" />
+            <button id="submit-login">Log-In</button>
+        </div>
+    </div>
+    <div id="main-content" class="hidden">
+        <div class="user-info">
+            <span id="current-user"></span>
+            <button id="logout-btn" class="logout-button">Log out</button>
+        </div>
+        <button id="add-object-btn" class="add-object-button">Add object</button>
+        <div id="create-object-modal" class="modal hidden">
+            <div class="modal-content">
+                <span class="close" data-close="create-object-modal">&times;</span>
+                <h2>Create an object</h2>
+                <label for="object-type">Object type:</label>
+                <select id="object-type">
+                    <option value="">-- Select --</option>
+                    <option value="box">Box</option>
+                    <option value="organizer">Cellular Organizer</option>
+                    <option value="table">Table</option>
+                </select>
+                <div id="box-params" class="hidden">
+                    <label for="box-color">Box color:</label>
+                    <input type="color" id="box-color" value="#ffff00" />
+                    <label for="box-purpose">Purpose:</label>
+                    <input type="text" id="box-purpose" placeholder="e.g. Wires box" />
+                    <label for="box-capacity">Box capacity (max items):</label>
+                    <input type="number" id="box-capacity" value="100" min="1" />
+                    <label for="box-items">Items currently in the box:</label>
+                    <input type="number" id="box-items" value="0" min="0" />
+                </div>
+                <div id="organizer-params" class="hidden">
+                    <label for="organizer-purpose">Purpose:</label>
+                    <input type="text" id="organizer-purpose" placeholder="e.g. Screws" />
+                    <label for="organizer-color">Organizer color:</label>
+                    <input type="color" id="organizer-color" value="#ff0000" />
+                    <label for="organizer-cells">Number of cells:</label>
+                    <input type="number" id="organizer-cells" value="10" min="1" />
+                </div>
+                <div id="table-params" class="hidden">
+                    <label for="table-orientation">Orientation:</label>
+                    <select id="table-orientation">
+                        <option value="north">north</option>
+                        <option value="south">south</option>
+                        <option value="east">east</option>
+                        <option value="west">west</option>
+                    </select>
+                    <label for="table-number">Table number:</label>
+                    <input type="text" id="table-number" placeholder="e.g. T-101" />
+                    <label for="table-box-count">Boxes on this table:</label>
+                    <input type="number" id="table-box-count" value="0" min="0" />
+                    <label for="table-organizer-count">Organizers on this table:</label>
+                    <input type="number" id="table-organizer-count" value="0" min="0" />
+                </div>
+                <button id="create-object-confirm">Create</button>
+            </div>
+        </div>
+        <div id="objects-container"></div>
+    </div>
     <div id="cell-modal" class="modal hidden">
-      <div class="modal-content">
-        <span class="close" data-close="cell-modal">&times;</span>
-        <h2>Cell setup</h2>
-        <p>Cell number: <span id="cell-number"></span></p>
-        <label for="cell-product">Product in cell:</label>
-        <input type="text" id="cell-product" />
-    
-        <label for="cell-quantity">Quantity:</label>
-        <div class="quantity-controls">
-          <button id="cell-quantity-minus">-</button>
-          <input type="number" id="cell-quantity" value="0" min="0" />
-          <button id="cell-quantity-plus">+</button>
+        <div class="modal-content">
+            <span class="close" data-close="cell-modal">&times;</span>
+            <h2>Cell setup</h2>
+            <p>Cell number: <span id="cell-number"></span></p>
+            <label for="cell-product">Product in cell:</label>
+            <input type="text" id="cell-product" />
+            <label for="cell-quantity">Quantity:</label>
+            <div class="quantity-controls">
+                <button id="cell-quantity-minus">-</button>
+                <input type="number" id="cell-quantity" value="0" min="0" />
+                <button id="cell-quantity-plus">+</button>
+            </div>
+            <button id="cell-save-btn">Save</button>
         </div>
-        <button id="cell-save-btn">Save</button>
-      </div>
     </div>
-    
-    <!-- Modal: editing a table object -->
     <div id="table-modal" class="modal hidden">
-      <div class="modal-content">
-        <h2>Edit Table</h2>
-        <p>Table ID: <span id="edit-table-id"></span></p>
-    
-        <label for="edit-table-orientation">Orientation:</label>
-        <select id="edit-table-orientation">
-          <option value="north">north</option>
-          <option value="south">south</option>
-          <option value="east">east</option>
-          <option value="west">west</option>
-        </select>
-    
-        <label for="edit-table-number">Table number:</label>
-        <input type="text" id="edit-table-number" />
-    
-        <label for="edit-table-box-count">Box count:</label>
-        <input type="number" id="edit-table-box-count" min="0" value="0" />
-    
-        <label for="edit-table-organizer-count">Organizer count:</label>
-        <input type="number" id="edit-table-organizer-count" min="0" value="0" />
-    
-        <div style="margin-top: 15px;">
-          <button id="edit-table-save-btn">Save</button>
-          <button id="edit-table-cancel-btn">Cancel</button>
+        <div class="modal-content">
+            <h2>Edit Table</h2>
+            <p>Table ID: <span id="edit-table-id"></span></p>
+            <label for="edit-table-orientation">Orientation:</label>
+            <select id="edit-table-orientation">
+                <option value="north">north</option>
+                <option value="south">south</option>
+                <option value="east">east</option>
+                <option value="west">west</option>
+            </select>
+            <label for="edit-table-number">Table number:</label>
+            <input type="text" id="edit-table-number" />
+            <label for="edit-table-box-count">Box count:</label>
+            <input type="number" id="edit-table-box-count" min="0" value="0" />
+            <label for="edit-table-organizer-count">Organizer count:</label>
+            <input type="number" id="edit-table-organizer-count" min="0" value="0" />
+            <div style="margin-top: 15px;">
+                <button id="edit-table-save-btn">Save</button>
+                <button id="edit-table-cancel-btn">Cancel</button>
+            </div>
         </div>
-      </div>
     </div>
-    
-    <!-- NEW: Modal for editing an existing Box/Organizer (similar to create) -->
     <div id="edit-object-modal" class="modal hidden">
-      <div class="modal-content">
-        <span class="close" data-close="edit-object-modal">&times;</span>
-        <h2>Edit Object</h2>
-        <!-- We'll dynamically show/hide the same param sections (box-params, organizer-params, table-params),
-             but with "edit" fields. We can reuse the same IDs or create separate ones for clarity. -->
-    
-        <label for="edit-object-type">Object type:</label>
-        <select id="edit-object-type" disabled>
-          <option value="">-- Select --</option>
-          <option value="box">Box</option>
-          <option value="organizer">Cellular Organizer</option>
-          <option value="table">Table</option>
-        </select>
-    
-        <!-- Edit Box -->
-        <div id="edit-box-params" class="hidden">
-          <label for="edit-box-color">Box color:</label>
-          <input type="color" id="edit-box-color" />
-    
-          <label for="edit-box-purpose">Purpose:</label>
-          <input type="text" id="edit-box-purpose" />
-    
-          <label for="edit-box-capacity">Capacity:</label>
-          <input type="number" id="edit-box-capacity" min="1" />
-    
-          <label for="edit-box-items">Items in box:</label>
-          <input type="number" id="edit-box-items" min="0" />
+        <div class="modal-content">
+            <span class="close" data-close="edit-object-modal">&times;</span>
+            <h2>Edit Object</h2>
+            <label for="edit-object-type">Object type:</label>
+            <select id="edit-object-type" disabled>
+                <option value="">-- Select --</option>
+                <option value="box">Box</option>
+                <option value="organizer">Cellular Organizer</option>
+                <option value="table">Table</option>
+            </select>
+            <div id="edit-box-params" class="hidden">
+                <label for="edit-box-color">Box color:</label>
+                <input type="color" id="edit-box-color" />
+                <label for="edit-box-purpose">Purpose:</label>
+                <input type="text" id="edit-box-purpose" />
+                <label for="edit-box-capacity">Capacity:</label>
+                <input type="number" id="edit-box-capacity" min="1" />
+                <label for="edit-box-items">Items in box:</label>
+                <input type="number" id="edit-box-items" min="0" />
+            </div>
+            <div id="edit-organizer-params" class="hidden">
+                <label for="edit-organizer-purpose">Purpose:</label>
+                <input type="text" id="edit-organizer-purpose" />
+                <label for="edit-organizer-color">Organizer color:</label>
+                <input type="color" id="edit-organizer-color" />
+                <label for="edit-organizer-cells">Number of cells (not recommended to shrink):</label>
+                <input type="number" id="edit-organizer-cells" min="1" />
+            </div>
+            <div id="edit-table-params" class="hidden">
+                <label for="edit-table-orientation2">Orientation:</label>
+                <select id="edit-table-orientation2">
+                    <option value="north">north</option>
+                    <option value="south">south</option>
+                    <option value="east">east</option>
+                    <option value="west">west</option>
+                </select>
+                <label for="edit-table-number2">Table number:</label>
+                <input type="text" id="edit-table-number2" />
+                <label for="edit-table-box-count2">Boxes on table:</label>
+                <input type="number" id="edit-table-box-count2" min="0" value="0" />
+                <label for="edit-table-organizer-count2">Organizers on table:</label>
+                <input type="number" id="edit-table-organizer-count2" min="0" value="0" />
+            </div>
+            <button id="edit-object-save-btn">Save changes</button>
         </div>
-    
-        <!-- Edit Organizer -->
-        <div id="edit-organizer-params" class="hidden">
-          <label for="edit-organizer-purpose">Purpose:</label>
-          <input type="text" id="edit-organizer-purpose" />
-    
-          <label for="edit-organizer-color">Organizer color:</label>
-          <input type="color" id="edit-organizer-color" />
-    
-          <label for="edit-organizer-cells">Number of cells (not recommended to shrink):</label>
-          <input type="number" id="edit-organizer-cells" min="1" />
-        </div>
-    
-        <!-- Edit Table -->
-        <div id="edit-table-params" class="hidden">
-          <label for="edit-table-orientation2">Orientation:</label>
-          <select id="edit-table-orientation2">
-            <option value="north">north</option>
-            <option value="south">south</option>
-            <option value="east">east</option>
-            <option value="west">west</option>
-          </select>
-    
-          <label for="edit-table-number2">Table number:</label>
-          <input type="text" id="edit-table-number2" />
-    
-          <label for="edit-table-box-count2">Boxes on table:</label>
-          <input type="number" id="edit-table-box-count2" min="0" value="0" />
-    
-          <label for="edit-table-organizer-count2">Organizers on table:</label>
-          <input type="number" id="edit-table-organizer-count2" min="0" value="0" />
-        </div>
-    
-        <button id="edit-object-save-btn">Save changes</button>
-      </div>
     </div>
-    
-    <!-- Trash can in the lower left corner (for deletion animation) -->
     <div id="trash-can">
-      <img src="media/trash.png" alt="Trash" />
+        <img src="media/trash.png" alt="Trash" />
     </div>
-
-<!-- Main script -->
-<script src=".."></script>
-
+    <script src="../scripts/mainJS.js"></script>
 </body>
 </html>
