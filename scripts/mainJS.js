@@ -136,6 +136,10 @@ function loginUser() {
     document.getElementById("export-log-section").classList.remove("hidden");
 
     document.getElementById("current-user").textContent = "User: " + currentUser;
+
+    // Remove the hidden class from the header menu
+    document.querySelector(".header-menu").classList.remove("hidden");
+
     closeModal("login-modal");
   } else {
     alert("Incorrect username or password!");
@@ -151,6 +155,9 @@ function logoutUser() {
   document.getElementById("auth-section").classList.remove("hidden");
   document.getElementById("main-content").classList.add("hidden");
   document.getElementById("export-log-section").classList.add("hidden");
+
+  // Add the hidden class back to the header menu
+  document.querySelector(".header-menu").classList.add("hidden");
 }
 
 /*******************************************************
