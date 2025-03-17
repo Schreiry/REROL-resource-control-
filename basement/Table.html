@@ -10,45 +10,84 @@
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bungee+Inline&display=swap">
   <link rel="stylesheet" href="../styles/Table/Table.css" />
   <link rel="stylesheet" href="../styles/Table/effects&decor.css">
+  <link rel="stylesheet" href="../styles/Table/settings.css">
 </head>
 <body>
 
-<header>
-  <div class="header-logo">
-    <img class="img" src="../media/Rerol.png" alt="Logo" />
+  <div class="header">
+    <header>
+      <div class="header-logo">
+        <img class="img" src="../media/R.png" alt="Logo" />
+      </div>
+      <div class="header-elements">
+        <h1 class="HE-txt">Products Table</h1>
+        <a href="./index.html" class="header-icon">
+          <span class="material-icons">home</span>
+        </a>
+        <button id="settings-btn" class="header-icon">
+          <span class="material-icons">settings</span>
+        </button>
+      </div>
+    </header>
   </div>
-</header>
 
-<main>
-  <div class="table-container fade-in">
-    <h2 class="product-txt">Products Table</h2>
-    <!-- Кнопка "Add Row" для добавления новой строки -->
-    <button id="add-row-btn" class="addrow">
-      <span class="material-icons icon">note_add </span> Add Row
-    </button>
+  <main>
+    <div class="table-container fade-in">
+      <h2 class="product-txt">Products Table</h2>
+      <!-- Кнопка "Add Row" для добавления новой строки -->
+      <button id="add-row-btn" class="addrow">
+        <span class="material-icons icon">note_add</span> Add Row
+      </button>
 
+      <table id="products-table">
+        <thead>
+          <tr class="row1">
+            <th class="col1">Product Name</th>
+            <th class="col1">Cell #</th>
+            <th class="col1">Quantity</th>
+            <th class="col1">Color</th>
+            <th class="col1">Type</th>
+            <th class="col2" style="width: 150px;">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- Динамические строки -->
+        </tbody>
+      </table>
+    </div>
+  </main>
 
-    <table id="products-table">
-      <thead>
-        <tr class="row1">
-          <th class="col1">Product Name</th>
-          <th class="col1">Cell #</th>
-          <th class="col1">Quantity</th>
-          <th class="col1">Color</th>
-          <th class="col1">Type</th>
-          <th class="col2" style="width: 150px;">Actions</th>
-        </tr>
-      </thead>
-      <tbody>
-        <!-- Динамические строки -->
-      </tbody>
-    </table>
+  <!-- Меню настроек -->
+  <div id="settings-menu" class="settings-menu hidden">
+    <div class="settings-header">
+      <span class="material-icons settings-minimize">remove</span>
+      <span class="material-icons settings-maximize">crop_square</span>
+      <span class="material-icons settings-close">close</span>
+    </div>
+    <div class="settings-content">
+      <h3>Settings</h3>
+      <div class="setting-item">
+        <label for="optimize-toggle">Optimization</label>
+        <input type="checkbox" id="optimize-toggle">
+      </div>
+      <div class="setting-item">
+        <label for="background-color">Background Color</label>
+        <input type="color" id="background-color" value="#29323c">
+      </div>
+      <div class="setting-item">
+        <label for="transparency-slider">Transparency</label>
+        <input type="range" id="transparency-slider" min="0" max="100" value="50">
+      </div>
+      <div class="setting-item">
+        <button id="reset-btn">Reset to Default</button>
+      </div>
+    </div>
   </div>
-</main>
 
-<!-- Скрипт с логикой работы таблицы -->
-<script src="../scripts/Table/MainTable.js"></script>
-<script src="../scripts/Table/dec&ani.js"></script>
+  <!-- Скрипт с логикой работы таблицы -->
+  <script src="../scripts/Table/MainTable.js"></script>
+  <script src="../scripts/Table/settings.js"></script>
+  <script src="../scripts/Table/dec&ani.js"></script>
 
 </body>
 </html>

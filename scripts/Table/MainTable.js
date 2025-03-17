@@ -80,6 +80,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Load existing objects from localStorage
   loadObjectsToTable(tableBody);
+
+  // Load settings script
+  const settingsScript = document.createElement("script");
+  settingsScript.src = "../scripts/Table/settings.js";
+  document.body.appendChild(settingsScript);
 });
 
 /*******************************************************
