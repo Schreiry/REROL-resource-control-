@@ -1,4 +1,11 @@
 /* Reset some defaults */
+.quantico-regular {
+  font-family: "Quantico", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
+
 * {
   margin: 0;
   padding: 0;
@@ -42,11 +49,15 @@ header {
   justify-content: space-between;
   align-items: center;
   transition: background 0.3s, box-shadow 0.3s;
+  -webkit-backdrop-filter: blur(15px) saturate(180%);
+  backdrop-filter: blur(15px) saturate(180%);
 }
 
 header:hover {
   background: rgba(195, 195, 195, 0.2);
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  -webkit-backdrop-filter: blur(15px) saturate(180%);
+  backdrop-filter: blur(15px) saturate(180%);
 }
 
 .header-logo img {
@@ -60,6 +71,7 @@ header:hover {
 .header-elements {
   display: flex;
   align-items: center;
+  
 }
 
 .header-icon {
@@ -91,6 +103,8 @@ header:hover {
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.276);
   transition: transform 0.3s, opacity 0.3s;
   z-index: 1000;
+  -webkit-backdrop-filter: blur(15px) saturate(180%);
+  backdrop-filter: blur(15px) saturate(180%);
 }
 
 .settings-menu.hidden {
@@ -140,6 +154,8 @@ header:hover {
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   transition: background 0.3s, box-shadow 0.3s;
+  -webkit-backdrop-filter: blur(15px) saturate(180%);
+  backdrop-filter: blur(15px) saturate(180%);
 }
 
 .table {
@@ -179,6 +195,9 @@ color: #fff;
 .addrow {
   visibility: visible;
 }
+.colType{
+  width: auto;
+}
 
 .primary-button:hover {
   background: rgba(48, 115, 220, 0.8);
@@ -204,6 +223,8 @@ table:hover {
 /* Table head styling */
 thead {
   background: rgba(240, 240, 240, 0.1);
+  -webkit-backdrop-filter: blur(15px) saturate(180%);
+  backdrop-filter: blur(15px) saturate(180%);
 }
 
 thead th {
@@ -229,6 +250,8 @@ tbody tr:hover {
 td {
   padding: 12px 15px;
   background: rgba(255, 255, 255, 0.1);
+  -webkit-backdrop-filter: blur(15px) saturate(180%);
+  backdrop-filter: blur(15px) saturate(180%);
 }
 
 /* Inputs inside the table cells */

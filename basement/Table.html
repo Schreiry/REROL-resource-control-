@@ -7,7 +7,11 @@
   <link rel="icon" href="../media/RR2.png" type="image/x-icon">
   <!-- Подключаем ваш стилизованный Table.css -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bungee+Inline&display=swap">
+  <!-- <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bungee+Inline&display=swap"> -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Quantico&display=swap" rel="stylesheet">
+
   <link rel="stylesheet" href="../styles/Table/Table.css" />
   <link rel="stylesheet" href="../styles/Table/effects&decor.css">
   <link rel="stylesheet" href="../styles/Table/settings.css">
@@ -46,8 +50,8 @@
             <th class="col1">Cell #</th>
             <th class="col1">Quantity</th>
             <th class="col1">Color</th>
-            <th class="col1">Type</th>
-            <th class="col2" style="width: 150px;">Actions</th>
+            <th class="colType">Type</th>
+            <th class="colActions" style="width: 150px;">Actions</th>
           </tr>
         </thead>
         <tbody>
@@ -60,12 +64,16 @@
   <!-- Меню настроек -->
   <div id="settings-menu" class="settings-menu hidden">
     <div class="settings-header">
+      <div class="txt-set">
+      <h3 cla>Settings</h3>
+      </div>
+      <div class="btn-RCC">
       <span class="material-icons settings-minimize">remove</span>
       <span class="material-icons settings-maximize">crop_square</span>
       <span class="material-icons settings-close">close</span>
     </div>
+    </div>
     <div class="settings-content">
-      <h3>Settings</h3>
       <div class="setting-item">
         <label for="optimize-toggle">Optimization</label>
         <input type="checkbox" id="optimize-toggle">
