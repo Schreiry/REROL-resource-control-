@@ -18,6 +18,10 @@
   transition: background 0.7s ease;
 }
 
+.settings-menu {
+  transition: background 0.7s ease, transform 0.3s, opacity 0.3s;
+}
+
 .settings-menu.hidden {
   transform: scale(0);
   opacity: 0;
