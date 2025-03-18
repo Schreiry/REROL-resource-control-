@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Information Card System</title>
+    <link rel="stylesheet" href="../styles/monfo/Stylemonfo.css">
+    <script src="https://cdn.jsdelivr.net/npm/dexie@3.2.4/dist/dexie.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Information Card System</h1>
+        </header>
+
+        <main>
+            <section id="common-info">
+                <h2>Common Info</h2>
+                <button id="create-product-btn">Create Product</button>
+            </section>
+
+            <section id="table-view">
+                <h2>Table</h2>
+                <table id="resource-table">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Photo</th>
+                            <th>Description</th>
+                            <th>Actions</th>
+                            </tr>
+                    </thead>
+                    <tbody id="resource-table-body">
+                        </tbody>
+                </table>
+            </section>
+
+            <section id="main-page-view">
+                <h2>Main Page</h2>
+                <div id="resource-grid">
+                    </div>
+            </section>
+
+            <section id="information-page-view">
+                <h2>Product Information</h2>
+                <div id="resource-details">
+                    </div>
+            </section>
+        </main>
+
+        <div id="create-product-modal" class="modal">
+            <div class="modal-content">
+                <span class="close-button">&times;</span>
+                <h2>Create New Product</h2>
+                <form id="create-product-form">
+                    <div class="form-group">
+                        <label for="product-type">Product Type:</label>
+                        <div class="select-wrapper">
+                            <select id="product-type">
+                                <option value="" disabled selected>Select product type</option>
+                                <optgroup label="Analog Components">
+                                    <optgroup label="Passive Components">
+                                        <option value="Resistors">Resistors</option>
+                                        <option value="Capacitors">Capacitors</option>
+                                        <option value="Inductors">Inductors</option>
+                                    </optgroup>
+                                    <optgroup label="Active Components">
+                                        <option value="Diodes">Diodes</option>
+                                        <option value="Transistors">Transistors</option>
+                                        <option value="Operational Amplifiers">Operational Amplifiers</option>
+                                        <option value="Comparators">Comparators</option>
+                                        <option value="Voltage Regulators">Voltage Regulators</option>
+                                        <option value="Sensors">Sensors</option>
+                                        <option value="Potentiometers">Potentiometers</option>
+                                        <option value="Thermistors">Thermistors</option>
+                                        <option value="Varistors">Varistors</option>
+                                    </optgroup>
+                                </optgroup>
+                                <optgroup label="Digital Components">
+                                    <optgroup label="Logic Gates">
+                                        <option value="Basic Logic Gates">Basic Logic Gates</option>
+                                        <option value="Flip-Flops">Flip-Flops</option>
+                                        <option value="Counters">Counters</option>
+                                        <option value="Registers">Registers</option>
+                                        <option value="Multiplexers">Multiplexers</option>
+                                        <option value="Demultiplexers">Demultiplexers</option>
+                                        <option value="Encoders">Encoders</option>
+                                        <option value="Decoders">Decoders</option>
+                                    </optgroup>
+                                    <optgroup label="Memory">
+                                        <option value="RAM">RAM</option>
+                                        <option value="ROM">ROM</option>
+                                    </optgroup>
+                                    <option value="Microcontrollers">Microcontrollers</option>
+                                    <option value="Microprocessors">Microprocessors</option>
+                                    <optgroup label="PLDs">
+                                        <option value="FPGA">FPGA</option>
+                                        <option value="CPLD">CPLD</option>
+                                    </optgroup>
+                                </optgroup>
+                                <optgroup label="Boards">
+                                    <option value="Breadboards">Breadboards</option>
+                                    <option value="Perfboards">Perfboards</option>
+                                    <option value="Single-Layer PCBs">Single-Layer PCBs</option>
+                                    <option value="Double-Layer PCBs">Double-Layer PCBs</option>
+                                    <option value="Multi-Layer PCBs">Multi-Layer PCBs</option>
+                                    <option value="Flexible PCBs">Flexible PCBs</option>
+                                    <option value="Evaluation Boards">Evaluation Boards</option>
+                                    <option value="Development Boards">Development Boards</option>
+                                </optgroup>
+                                <optgroup label="Tools">
+                                    <optgroup label="General Tools">
+                                        <option value="Multimeter">Multimeter</option>
+                                        <option value="Oscilloscope">Oscilloscope</option>
+                                        <option value="Signal Generator">Signal Generator</option>
+                                        <option value="Power Supply">Power Supply</option>
+                                        <option value="Soldering Iron and Accessories">Soldering Iron and Accessories</option>
+                                        <option value="Wire Strippers and Cutters">Wire Strippers and Cutters</option>
+                                        <option value="Pliers, Cutters, Tweezers">Pliers, Cutters, Tweezers</option>
+                                        <option value="Screwdrivers">Screwdrivers</option>
+                                    </optgroup>
+                                    <optgroup label="Analog Circuit Design Tools">
+                                        <option value="Spectrum Analyzer">Spectrum Analyzer</option>
+                                        <option value="LCR Meter">LCR Meter</option>
+                                    </optgroup>
+                                    <optgroup label="Digital Circuit Design Tools">
+                                        <option value="Logic Analyzer">Logic Analyzer</option>
+                                        <option value="Programmers">Programmers</option>
+                                        <option value="Debuggers">Debuggers</option>
+                                    </optgroup>
+                                    <optgroup label="Software Tools">
+                                        <option value="Electronic Circuit Simulators">Electronic Circuit Simulators</option>
+                                        <option value="PCB Design Software">PCB Design Software</option>
+                                        <option value="Microcontroller IDEs">Microcontroller IDEs</option>
+                                        <option value="Hardware Description Languages (HDL)">Hardware Description Languages (HDL)</option>
+                                    </optgroup>
+                                </optgroup>
+                                <optgroup label="Modules">
+                                    <optgroup label="Analog Modules">
+                                        <option value="Sensor Modules">Sensor Modules</option>
+                                        <option value="Power Modules">Power Modules</option>
+                                        <option value="Amplifier Modules">Amplifier Modules</option>
+                                        <option value="Filter Modules">Filter Modules</option>
+                                        <option value="RF Modules">RF Modules</option>
+                                        <option value="ADC Modules">ADC Modules</option>
+                                        <option value="DAC Modules">DAC Modules</option>
+                                    </optgroup>
+                                    <optgroup label="Digital Modules">
+                                        <option value="Microcontroller Modules">Microcontroller Modules</option>
+                                        <option value="Memory Modules">Memory Modules</option>
+                                        <option value="Display Modules">Display Modules</option>
+                                        <option value="Communication Modules">Communication Modules</option>
+                                        <option value="Relay Modules">Relay Modules</option>
+                                        <option value="Motor Driver Modules">Motor Driver Modules</option>
+                                        <option value="Real-Time Clock (RTC) Modules">Real-Time Clock (RTC) Modules</option>
+                                    </optgroup>
+                                </optgroup>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="name">Name:</label>
+                        <input type="text" id="name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="photo">Photo:</label>
+                        <input type="file" id="photo" accept="image/*">
+                        <input type="text" id="photo-url" placeholder="Or provide an image URL">
+                    </div>
+                    <div class="form-group">
+                        <label for="description">Description:</label>
+                        <textarea id="description"></textarea>
+                    </div>
+                    <div id="characteristics-container">
+                        </div>
+                    <button type="submit">Create Product</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="../scripts/Database/monfo.js"></script>
+</body>
+</html>
