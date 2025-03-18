@@ -6,6 +6,53 @@
     <title>Information Card System</title>
     <link rel="stylesheet" href="../styles/monfo/Stylemonfo.css">
     <script src="https://cdn.jsdelivr.net/npm/dexie@3.2.4/dist/dexie.min.js"></script>
+    <style>
+        #trash-icon {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            font-size: 24px;
+            cursor: pointer;
+            z-index: 10;
+        }
+
+        #trash-menu {
+            display: none;
+            position: fixed;
+            top: 60px;
+            right: 20px;
+            background-color: #f9f9f9;
+            border: 1px solid #ccc;
+            padding: 15px;
+            border-radius: 5px;
+            z-index: 11;
+            width: 300px;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+
+        .trashed-item {
+            border-bottom: 1px solid #eee;
+            padding: 10px 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .trashed-item:last-child {
+            border-bottom: none;
+        }
+
+        .trashed-item-info {
+            flex-grow: 1;
+            margin-right: 10px;
+        }
+
+        .trashed-item-actions button {
+            margin-left: 5px;
+            cursor: pointer;
+        }
+    </style>
 </head>
 <body>
     <div class="container">
@@ -48,11 +95,20 @@
             </section>
         </main>
 
-        <div id="create-product-modal" class="modal">
+        <div id="trash-icon">&#128465;</div>
+
+        <div id="trash-menu" class="draggable">
+            <h3>Trash</h3>
+            <div id="trashed-items-list">
+                </div>
+        </div>
+
+        <div id="create-product-modal" class="modal draggable">
             <div class="modal-content">
                 <span class="close-button">&times;</span>
-                <h2>Create New Product</h2>
+                <h2 id="modal-title">Create New Product</h2>
                 <form id="create-product-form">
+                    <input type="hidden" id="edit-resource-id">
                     <div class="form-group">
                         <label for="product-type">Product Type:</label>
                         <div class="select-wrapper">

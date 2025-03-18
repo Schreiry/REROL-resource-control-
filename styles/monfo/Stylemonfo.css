@@ -1,4 +1,4 @@
-/* (No significant changes needed as it mainly contains styling rules) */
+/* (No significant changes, included for completeness) */
 body {
     font-family: sans-serif;
     margin: 20px;
@@ -146,4 +146,16 @@ header {
     background-repeat: no-repeat;
     background-position: right 8px top 50%;
     padding-right: 30px;
+}
+
+/* ... other styles ... */
+
+.modal-content {
+    /* ... other styles ... */
+    width: 500px; /* Adjust as needed */
+}
+
+#trash-menu {
+    /* ... other styles ... */
+    width: 250px; /* Adjust as needed */
 }

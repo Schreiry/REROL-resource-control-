@@ -285,124 +285,44 @@ function createObject() {
 /*******************************************************
  * Render objects
  *******************************************************/
-function renderObjects() {
+function renderObjects(resources) {
   const container = document.getElementById("objects-container");
   container.innerHTML = "";
 
-  const objects = getObjectsFromStorage();
-  objects.forEach(obj => {
+  resources.forEach(resource => {
     const card = document.createElement("div");
     card.classList.add("object-card");
 
-    if (obj.type === "box") {
-      card.style.backgroundColor = obj.color || "#ffff00";
-      const title = document.createElement("div");
-      title.classList.add("object-title");
-      title.textContent = obj.purpose || "Untitled (box)";
-      card.appendChild(title);
+    const name = document.createElement("h3");
+    name.textContent = resource.name;
+    card.appendChild(name);
 
-      const capacity = obj.capacity || 1;
-      const items = obj.items || 0;
-      const percent = Math.round((items / capacity) * 100);
-
-      const ratioText = document.createElement("div");
-      ratioText.textContent = `Items: ${items} / ${capacity} (${percent}%)`;
-      ratioText.style.marginBottom = "5px";
-      card.appendChild(ratioText);
-
-      const fillBar = document.createElement("div");
-      fillBar.classList.add("box-fill-bar");
-      const fillBarInner = document.createElement("div");
-      fillBarInner.classList.add("box-fill-bar-inner");
-      fillBarInner.style.width = percent + "%";
-      fillBar.appendChild(fillBarInner);
-      card.appendChild(fillBar);
-
-      card.addEventListener("click", () => {
-        alert(`Box: ${obj.purpose}\nID: ${obj.id}\nItems: ${items}/${capacity}`);
-      });
-
-    } else if (obj.type === "organizer") {
-      card.style.backgroundColor = obj.color || "#ff0000";
-      const title = document.createElement("div");
-      title.classList.add("object-title");
-      title.textContent = obj.purpose || "Untitled (organizer)";
-      card.appendChild(title);
-
-      const cellsWrapper = document.createElement("div");
-      cellsWrapper.classList.add("organizer-cells");
-      obj.cells.forEach(cell => {
-        const cellDiv = document.createElement("div");
-        cellDiv.classList.add("organizer-cell");
-        cellDiv.textContent = cell.cellIndex;
-
-        cellDiv.addEventListener("click", (e) => {
-          e.stopPropagation();
-          cellDiv.classList.add("active");
-          setTimeout(() => cellDiv.classList.remove("active"), 500);
-          openCellModal(obj.id, cell.cellIndex);
-        });
-        cellsWrapper.appendChild(cellDiv);
-      });
-      card.appendChild(cellsWrapper);
-
-      card.addEventListener("click", () => {
-        alert(`Organizer: ${obj.purpose}\nID: ${obj.id}\nCells: ${obj.cells.length}`);
-      });
-
-    } else if (obj.type === "table") {
-      card.style.backgroundColor = "#fafafa";
-      const title = document.createElement("div");
-      title.classList.add("object-title");
-      title.textContent = `Table #${obj.tableNumber || "???"}`;
-      card.appendChild(title);
-
-      const info = document.createElement("div");
-      info.innerHTML = `
-        <p>Orientation: ${obj.orientation}</p>
-        <p>Box count: ${obj.boxCount}</p>
-        <p>Organizer count: ${obj.organizerCount}</p>
-      `;
-      card.appendChild(info);
-
-      card.addEventListener("click", () => {
-        openTableModal(obj.id);
-      });
+    if (resource.photo) {
+      const img = document.createElement("img");
+      img.src = resource.photo;
+      img.alt = resource.name;
+      img.style.maxWidth = "100px";
+      card.appendChild(img);
     }
 
-    // Actions: Edit / Duplicate / Delete
+    const description = document.createElement("p");
+    description.textContent = resource.description || "No description available.";
+    card.appendChild(description);
+
     const actionsDiv = document.createElement("div");
     actionsDiv.classList.add("object-actions");
 
-    // 1) Edit
     const editBtn = document.createElement("button");
     editBtn.textContent = "Edit";
-    editBtn.addEventListener("click", (e) => {
-      e.stopPropagation();
-      openEditObjectModal(obj.id);
-    });
+    editBtn.addEventListener("click", () => openEditModal(resource.id));
+    actionsDiv.appendChild(editBtn);
 
-    // 2) Duplicate
-    const duplicateBtn = document.createElement("button");
-    duplicateBtn.textContent = "Duplicate";
-    duplicateBtn.addEventListener("click", (e) => {
-      e.stopPropagation();
-      duplicateObject(obj.id);
-    });
-
-    // 3) Delete
     const deleteBtn = document.createElement("button");
     deleteBtn.textContent = "Delete";
-    deleteBtn.addEventListener("click", (e) => {
-      e.stopPropagation();
-      deleteObjectWithAnimation(obj.id, card);
-    });
-
-    actionsDiv.appendChild(editBtn);
-    actionsDiv.appendChild(duplicateBtn);
+    deleteBtn.addEventListener("click", () => deleteResource(resource.id));
     actionsDiv.appendChild(deleteBtn);
-    card.appendChild(actionsDiv);
 
+    card.appendChild(actionsDiv);
     container.appendChild(card);
   });
 }
@@ -700,7 +620,7 @@ function exportLog() {
 /*******************************************************
  * Attach event listeners on page load
  *******************************************************/
-window.addEventListener("DOMContentLoaded", () => {
+window.addEventListener("DOMContentLoaded", async () => {
   loadBlockchain();
 
   document.getElementById("register-btn").addEventListener("click", () => openModal("register-modal"));
@@ -736,7 +656,7 @@ window.addEventListener("DOMContentLoaded", () => {
 
   document.getElementById("export-log-btn").addEventListener("click", exportLog);
 
-  renderObjects();
+  await syncResources();
 });
 
 /*******************************************************
@@ -775,4 +695,10 @@ function updateData(data) {
 
   // Re-render objects
   renderObjects();
+}
+
+// Синхронизация с базой данных из monfo.js
+async function syncResources() {
+  const activeResources = await db.resources.where('status').equals(RESOURCE_STATUS.ACTIVE).toArray();
+  renderObjects(activeResources);
 }
